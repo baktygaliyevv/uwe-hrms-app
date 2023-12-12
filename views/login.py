@@ -5,6 +5,7 @@ import secrets
 from datetime import datetime, timedelta
 import sys
 from pathlib import Path
+from standard import StandardWindow
 
 project_directory = Path(__file__).resolve().parent.parent
 sys.path.append(str(project_directory))
@@ -13,28 +14,28 @@ from entities.user_tokens import UserToken
 from entities.user import User
 from session import Session
 
-class LoginApplication(tk.Tk):
-    def __init__(self):
-        super().__init__()
-        self.title('Login Screen')
-        self.geometry('800x600')  # Set the window size
 
-        # Styling constants
-        entry_font = font.Font(size=14)
-        button_color = '#2F9AB1'
+class LoginApplication(StandardWindow):
+    def __init__(self):
+        # Initialize the base class with the title and size
+        super().__init__(title='Login Screen', window_size='800x600')
+
+        # Now the styling constants and other properties come from StandardWindow
+        entry_font = self.standard_font
+        button_color = self.button_color
 
         # Create a frame for the login widgets and center it
-        login_frame = tk.Frame(self, bd=2)
+        login_frame = tk.Frame(self, bd=2, bg=self['bg'])
         login_frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
         # Phone label and entry
-        self.phone_label = tk.Label(login_frame, text="Phone", font=entry_font)
+        self.phone_label = tk.Label(login_frame, text="Phone", font=entry_font, bg=self['bg'])
         self.phone_label.pack(pady=5)
         self.phone_entry = tk.Entry(login_frame, font=entry_font)
         self.phone_entry.pack(pady=5)
 
         # Password label and entry
-        self.password_label = tk.Label(login_frame, text="Password", font=entry_font)
+        self.password_label = tk.Label(login_frame, text="Password", font=entry_font, bg=self['bg'])
         self.password_label.pack(pady=5)
         self.password_entry = tk.Entry(login_frame, show="*", font=entry_font)
         self.password_entry.pack(pady=5)
@@ -47,6 +48,7 @@ class LoginApplication(tk.Tk):
         self.phone_entry.focus_set()
 
     def login(self):
+        # вот эта хуйня плохо работает потом пофиксим когда над логикой будем работать
         phone = self.phone_entry.get()
         password = self.password_entry.get()
 

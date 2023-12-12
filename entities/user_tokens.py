@@ -12,4 +12,4 @@ class UserToken(Base):
     user_id = Column(Integer, ForeignKey('users.id')) 
     expiration_date = Column(DateTime, default=datetime.utcnow)
 
-    user = relationship("User", back_populates="tokens")
+    users = relationship("User", back_populates="user_tokens")

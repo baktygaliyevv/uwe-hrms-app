@@ -6,17 +6,17 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 metadata = Base.metadata
 
-class Order(Base):
-    __tablename__ = 'orders'
+class Delivery(Base):
+    __tablename__ = 'deliveries'
 
     id = Column(Integer, primary_key=True)
-    user_id = Column(ForeignKey('users.id'), index=True)
-    table_id = Column(ForeignKey('tables.id'), nullable=False, index=True)
+    user_id = Column(ForeignKey('users.id'), nullable=False, index=True)
+    restaurant_id = Column(ForeignKey('restaurants.id'), nullable=False, index=True)
     promocode_id = Column(ForeignKey('promocodes.id'), index=True)
+    address = Column(Text(collation='utf8mb3_unicode_ci'), nullable=False)
     created_at = Column(DateTime, nullable=False)
-    complete_at = Column(DateTime)
+    status = Column(ENUM('new', 'delivering', 'complete'), nullable=False)
 
     promocode = relationship('Promocode')
-    table = relationship('Table')
+    restaurant = relationship('Restaurant')
     user = relationship('User')
-

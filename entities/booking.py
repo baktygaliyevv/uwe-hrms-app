@@ -14,7 +14,7 @@ class Booking(Base):
     table_id = Column(ForeignKey('tables.id'), nullable=False, index=True)
     persons = Column(Integer, nullable=False)
     date = Column(DateTime, nullable=False)
-    comment = Column(Text(collation='utf8mb3_unicode_ci'), nullable=False)
+    comment = Column(Text)
 
     table = relationship('Table')
     user = relationship('User')

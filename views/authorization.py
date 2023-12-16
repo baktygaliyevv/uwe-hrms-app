@@ -62,7 +62,6 @@ class LoginApplication(StandardWindow):
             session.add(user_token)
             session.commit()
 
-            # Here you would manage user roles and proceed with the application
             print(f"User logged in with token: {token}")
             
             # redirect to the main application or another window as needed
@@ -80,34 +79,35 @@ class SignupForm(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("Sign Up")
-        self.geometry('800x600') 
-        standard = StandardWindow()  
+        self.geometry('800x600')
+        self.configure(bg=parent['background'])
 
-        self.configure(bg=standard['background'])  
+        title_font = parent.standard_font 
+        entry_font = parent.entry_font 
 
-        title_font = standard.standard_font  
-        entry_font = standard.entry_font
-
-        title_label = tk.Label(self, text="Create your account", font=title_font, bg=standard['background'])
+        title_label = tk.Label(self, text="Create your account", font=title_font, bg=parent['background'])
         title_label.pack(pady=(10, 5))
 
-        login_prompt = tk.Label(self, text="Already have one?", fg="blue", cursor="hand2", bg=standard['background'])
+        login_prompt = tk.Label(self, text="Already have one?", fg="blue", cursor="hand2", bg=parent['background'])
         login_prompt.pack()
         login_prompt.bind("<Button-1>", lambda e: parent.deiconify() or self.destroy()) 
 
-        fields = ["First Name", "Last Name", "Phone Number", "Password", "Confirm Password"]
-        for field in fields:
-            tk.Label(self, text=field, font=entry_font, bg=standard['background']).pack(pady=(5, 0))
-            entry = tk.Entry(self, font=entry_font)
-            entry.pack(pady=(0, 5))
-            setattr(self, f"{field.lower().replace(' ', '_')}_entry", entry)
+        self.first_name_entry = self.create_entry("First Name", entry_font)
+        self.last_name_entry = self.create_entry("Last Name", entry_font)
+        self.phone_entry = self.create_entry("Phone Number", entry_font)
+        self.password_entry = self.create_entry("Password", entry_font, show="*")
+        self.confirm_password_entry = self.create_entry("Confirm Password", entry_font, show="*")
 
-        self.password_entry.config(show="*")
-        self.confirm_password_entry.config(show="*")
-
-        self.signup_button = tk.Button(self, text="CREATE YOUR ACCOUNT", command=self.register,bg=standard.button_color, fg="white", font=entry_font)
+        self.signup_button = tk.Button(self, text="CREATE YOUR ACCOUNT", command=self.signup_validation, bg=parent.button_color, fg="white", font=entry_font)
         self.signup_button.pack(pady=10)
 
+    def create_entry(self, label, font, show=None):
+        """Helper function to create labeled entry fields."""
+        tk.Label(self, text=label, font=font, bg=self['background']).pack(pady=(5, 0))
+        entry = tk.Entry(self, font=font, show=show)
+        entry.pack(pady=(0, 5))
+        return entry
+    
     def signup_validation(self):
         fname = self.first_name_entry.get()
         lname = self.last_name_entry.get()
@@ -115,12 +115,14 @@ class SignupForm(tk.Toplevel):
         password = self.password_entry.get()
         confirm_password = self.confirm_password_entry.get()
 
-        # Add validation logic here
+        if not fname or not lname or not phone or not password or not confirm_password:
+            messagebox.showerror("Error", "All fields must be filled")
+            return
+
         if password != confirm_password:
             messagebox.showerror("Error", "Passwords do not match")
             return
 
-        # Placeholder for account creation logic
         with Session() as session:
             new_user = User(first_name=fname, last_name=lname, phone=phone, password_hash=hashlib.sha256(password.encode()).hexdigest())
             session.add(new_user)

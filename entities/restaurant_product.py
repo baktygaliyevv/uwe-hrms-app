@@ -17,3 +17,4 @@ class RestaurantProduct(Base):
     product = relationship('Product')
     restaurant = relationship('Restaurant')
 
+

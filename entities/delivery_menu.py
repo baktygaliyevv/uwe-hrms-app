@@ -6,13 +6,13 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 metadata = Base.metadata
 
-class OrderDelivery(Base):
-    __tablename__ = 'order_deliveries'
+class DeliveryMenu(Base):
+    __tablename__ = 'delivery_menu'
 
     id = Column(Integer, primary_key=True)
-    order_id = Column(ForeignKey('orders.id'), nullable=False, index=True)
-    address = Column(Text(collation='utf8mb3_unicode_ci'), nullable=False)
-    status = Column(ENUM('new', 'delivering', 'complete', ''), nullable=False)
+    delivery_id = Column(ForeignKey('deliveries.id'), nullable=False, index=True)
+    menu_id = Column(ForeignKey('menu.id'), nullable=False, index=True)
+    quantity = Column(Integer, nullable=False)
 
-    order = relationship('Order')
-
+    delivery = relationship('Delivery')
+    menu = relationship('Menu')

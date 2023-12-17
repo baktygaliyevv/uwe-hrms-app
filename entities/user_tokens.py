@@ -8,8 +8,8 @@ Base = declarative_base()
 class UserToken(Base):
     __tablename__ = 'user_tokens'
 
-    token = Column(String(64), primary_key=True, nullable=False, unique=True)
-    user_id = Column(Integer, ForeignKey('users.id')) 
-    expiration_date = Column(DateTime, default=datetime.utcnow)
+    token = Column(String(64, 'utf8mb3_unicode_ci'), primary_key=True)
+    user_id = Column(ForeignKey('users.id'), nullable=False, index=True)
+    expiration_date = Column(DateTime, nullable=False)
 
-    users = relationship("User", back_populates="user_tokens")
+    user = relationship('User')

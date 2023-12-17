@@ -1,39 +1,29 @@
 import tkinter as tk
-from tkinter import messagebox, font
+from tkinter import messagebox
 import hashlib
-import secrets
-from datetime import datetime, timedelta
-from standard import StandardWindow
-from config import PROJECT_DIRECTORY
-from entities.user_tokens import UserToken
 from entities.user import User
 
 from session import Session
 
-class SignupForm(tk.Toplevel):
-    def __init__(self, parent):
-        super().__init__(parent)
-        self.title("Sign Up")
-        self.geometry('800x600')
-        self.configure(bg=parent['background'])
+class SignupFrame(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
 
-        title_font = parent.standard_font 
-        entry_font = parent.entry_font 
-
-        title_label = tk.Label(self, text="Create your account", font=title_font, bg=parent['background'])
+        title_label = tk.Label(self, text="Create your account", font=controller.base_font, bg=parent['background'])
         title_label.pack(pady=(10, 5))
 
         login_prompt = tk.Label(self, text="Already have one?", fg="blue", cursor="hand2", bg=parent['background'])
         login_prompt.pack()
-        login_prompt.bind("<Button-1>", lambda e: parent.deiconify() or self.destroy()) 
+        login_prompt.bind("<Button-1>", lambda _: controller.show_frame('LoginFrame')) 
 
-        self.first_name_entry = self.create_entry("First Name", entry_font)
-        self.last_name_entry = self.create_entry("Last Name", entry_font)
-        self.phone_entry = self.create_entry("Phone Number", entry_font)
-        self.password_entry = self.create_entry("Password", entry_font, show="*")
-        self.confirm_password_entry = self.create_entry("Confirm Password", entry_font, show="*")
+        self.first_name_entry = self.create_entry("First Name", controller.entry_font)
+        self.last_name_entry = self.create_entry("Last Name", controller.entry_font)
+        self.phone_entry = self.create_entry("Phone Number", controller.entry_font)
+        self.password_entry = self.create_entry("Password", controller.entry_font, show="*")
+        self.confirm_password_entry = self.create_entry("Confirm Password", controller.entry_font, show="*")
 
-        self.signup_button = tk.Button(self, text="CREATE YOUR ACCOUNT", command=self.signup_validation, bg=parent.button_color, fg="white", font=entry_font)
+        self.signup_button = tk.Button(self, text="CREATE YOUR ACCOUNT", command=self.signup_validation, bg=controller.button_color, fg="white", font=controller.entry_font)
         self.signup_button.pack(pady=10)
 
     def create_entry(self, label, font, show=None):
@@ -65,4 +55,4 @@ class SignupForm(tk.Toplevel):
 
         messagebox.showinfo("Success", "Account created successfully, please log in.")
 
-        self.destroy()
+        self.controller.show_frame('LoginFrame')

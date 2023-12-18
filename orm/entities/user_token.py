@@ -5,7 +5,7 @@ from datetime import datetime
 
 Base = declarative_base()
 
-class UserToken(Base):
+class UserTokenEntity(Base):
     __tablename__ = 'user_tokens'
 
     token = Column(String(64, 'utf8mb3_unicode_ci'), primary_key=True)

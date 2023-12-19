@@ -1,13 +1,19 @@
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve()))
+
 from dotenv import load_dotenv
 load_dotenv()
 
-import sys
-from pathlib import Path
+from orm.db import init_db
+init_db()
+
 import tkinter as tk
 import tkinter.font as font
 from orm.base import HRMS
 
-from frames.login import LoginFrame
+from frames.login.login import LoginFrame
+from frames.manage_users.manage_users import ManageUsersFrame
 
 class MainWindow(tk.Tk):
     def __init__(self, *args, **kwargs):
@@ -29,7 +35,7 @@ class MainWindow(tk.Tk):
 
         self.frames = {}
 
-        for F in (LoginFrame,):
+        for F in (LoginFrame, ManageUsersFrame):
             frame = F(container, self)
             self.frames[F.__name__] = frame
             frame.grid(row = 0, column = 0, sticky = "nsew")
@@ -40,6 +46,5 @@ class MainWindow(tk.Tk):
         frame = self.frames[cont]    
         frame.tkraise()
 
-sys.path.append(str(Path(__file__).resolve()))
 app = MainWindow()
 app.mainloop()

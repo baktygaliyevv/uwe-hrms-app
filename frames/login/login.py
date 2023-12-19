@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+
 class LoginFrame(tk.Frame):
     def __init__(self, parent, app):
         tk.Frame.__init__(self, parent)

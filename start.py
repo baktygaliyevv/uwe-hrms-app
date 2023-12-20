@@ -40,7 +40,9 @@ class MainWindow(tk.Tk):
             self.frames[F.__name__] = frame
             frame.grid(row = 0, column = 0, sticky = "nsew")
 
-        self.show_frame('LoginFrame')
+        # self.show_frame('LoginFrame')
+        self.show_frame('ManageUsersFrame')
+
 
     def show_frame(self, cont):
         frame = self.frames[cont]    

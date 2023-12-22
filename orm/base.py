@@ -17,6 +17,4 @@ class HRMS:
         self.users.append(user)
         
     def delete_user(self, user: User):
-        session.delete(user.__entity)
-        session.commit()
         self.users.remove(user)

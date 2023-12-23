@@ -25,8 +25,10 @@ class MainWindow(tk.Tk):
         container.grid_rowconfigure(0, weight = 1)
         container.grid_columnconfigure(0, weight = 1)
 
-        self.base_font = font.Font(size=14)
-        self.entry_font = font.Font(size=14)
+        self.base_font = font.Font(size=12)
+        self.base_font_bold = font.Font(size=12, weight='bold')
+        self.entry_font = font.Font(size=12)
+        self.title_font = font.Font(size=24)
         self.background_color = '#F3F3F3'
         self.button_color = '#2F9AB1'
 

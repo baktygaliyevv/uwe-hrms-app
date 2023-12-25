@@ -31,6 +31,7 @@ class DeleteUserPopup(tk.Toplevel):
                 self.app.refresh_user_list()
             except Exception as e:
                 messagebox.showerror("Error", f"An error occurred: {e}")
+        self.master.refresh_user_list()
         self.destroy()
 
     def cancel_delete(self):

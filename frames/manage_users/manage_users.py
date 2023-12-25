@@ -3,39 +3,47 @@ from tkinter import ttk
 from orm.base import HRMS
 from frames.manage_users.popups.add_edit_user import AddEditUserPopup
 from frames.manage_users.popups.delete_user import DeleteUserPopup
-from constants.constants import ROLE_OPTIONS
+from constants.constants import ROLE_OPTIONS, TableComponent
 
 class ManageUsersFrame(tk.Frame):
     def __init__(self, parent, app):
-        tk.Frame.__init__(self, parent)
+        super().__init__(parent)
         self.app = app
         self.hrms = HRMS()
 
-        self.grid_columnconfigure(tuple(range(2)), weight=1)
-        tk.Label(self, text="Users", font=app.title_font).grid(row=0, column=0, sticky="w")
-        tk.Button(self, text="Add User", command=self.add_user, font=app.base_font, bg="blue", fg="white").grid(row=0, column=1, sticky='e')
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_rowconfigure(1, weight=1) 
+        tk.Label(self, text="Users", font=self.app.title_font).grid(row=0, column=0, sticky="w")
+        tk.Button(self, text="Add User", command=self.add_user, font=self.app.base_font, bg="blue", fg="white").grid(row=0, column=1, sticky='e')
 
-        table = tk.Frame(self)
-        table.grid(row=1, column=0, columnspan=2, sticky='ew')
-        table.grid_columnconfigure(tuple(range(4)), weight=1)
-        tk.Label(table, text="Name", anchor="w", font=app.base_font_bold).grid(row=0, column=0, sticky="ew")
-        tk.Label(table, text="Phone", anchor="w", font=app.base_font_bold).grid(row=0, column=1, sticky="ew")
-        tk.Label(table, text="Role", anchor="w", font=app.base_font_bold).grid(row=0, column=2, sticky="ew")
-        tk.Label(table, text="Actions", anchor="w", font=app.base_font_bold).grid(row=0, column=3, sticky="ew")
+        headings = ['First Name', 'Last Name', 'Phone', 'Role', 'Edit', 'Delete']
+        self.table_component = TableComponent(
+            self,
+            headings=headings,
+            data=self.hrms.users,
+            action_callbacks={
+                'edit': self.edit_user,
+                'delete': self.delete_user
+            }
+        )
+        self.table_component.grid(row=1, column=0, columnspan=2, sticky='nsew')
+        self.populate_users()
 
-        for row, user in enumerate(self.hrms.users):
-            row += 1
-            tk.Label(table, text=f"{user.first_name} {user.last_name}", anchor='w', font=app.base_font).grid(row=row, column=0, sticky='ew')
-            tk.Label(table, text=user.phone, anchor='w', font=app.base_font).grid(row=row, column=1, sticky='ew')
-            cb = ttk.Combobox(table, values=ROLE_OPTIONS)
-            cb.set(user.role)
+    def populate_users(self):
+        for row, user in enumerate(self.hrms.users, start=1):
+            first_name = f"{user.first_name}"
+            last_name = f"{user.last_name}"
+            phone = user.phone
+            role = user.role
+
+            tk.Label(self.table_component, text=first_name, anchor='center', font=self.app.base_font).grid(row=row, column=0, sticky='nsew')
+            tk.Label(self.table_component, text=last_name, anchor='center', font=self.app.base_font).grid(row=row, column=1, sticky='nsew')
+            tk.Label(self.table_component, text=phone, anchor='center', font=self.app.base_font).grid(row=row, column=2, sticky='nsew')
+
+            cb = ttk.Combobox(self.table_component, values=ROLE_OPTIONS)
+            cb.set(role)
             cb.bind('<<ComboboxSelected>>', lambda e, user=user: self.role_changed(user, e.widget.get()))   
-            cb.grid(row=row, column=2, sticky='ew')
-            actions_frame = tk.Frame(table)
-            actions_frame.grid(row=row, column=3, sticky='ew')
-            actions_frame.grid_columnconfigure(tuple(range(2)), weight=1)
-            tk.Button(actions_frame, text='✎', command=lambda user=user: self.edit_user(user)).grid(row=0, column=0, sticky='ew')
-            tk.Button(actions_frame, text='✖', command=lambda user=user: self.delete_user(user)).grid(row=0, column=1, sticky='ew')
+            cb.grid(row=row, column=3, sticky='nsew')
 
     def role_changed(self, user, role):
         if user.role != role:
@@ -52,3 +60,8 @@ class ManageUsersFrame(tk.Frame):
     def delete_user(self, user):
         popup = DeleteUserPopup(self, self.app, user)
         self.wait_window(popup)
+    
+    def refresh_user_list(self):
+        self.hrms = HRMS()
+        self.populate_users()
+

@@ -16,5 +16,15 @@ class HRMS:
     def add_user(self, user: User):
         self.users.append(user)
         
-    def delete_user(self, user: User):
-        self.users.remove(user)
+    # def delete_user(self, user: User):
+    #     self.users.remove(user)
+    def delete_user(self, user_phone):
+        user_to_remove = None
+        for user in self.users:
+            if user.phone == user_phone:
+                user_to_remove = user
+                break
+        if user_to_remove:
+            self.users.remove(user_to_remove)
+            session.delete(user_to_remove.__entity)
+            session.commit()

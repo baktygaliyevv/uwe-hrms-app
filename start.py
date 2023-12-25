@@ -45,10 +45,13 @@ class MainWindow(tk.Tk):
         # self.show_frame('LoginFrame')
         self.show_frame('ManageUsersFrame')
 
-
+    def refresh_user_list(self):
+        manage_users_frame = self.frames['ManageUsersFrame']
+        manage_users_frame.populate_users()
+        
     def show_frame(self, cont):
         frame = self.frames[cont]    
         frame.tkraise()
-
+    
 app = MainWindow()
 app.mainloop()

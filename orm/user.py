@@ -65,3 +65,8 @@ class User:
     def check_password(self, password):
         hash = hash_password(password, self.__salt)
         return hash == self.__hash
+    
+
+    def delete(self):
+        session.delete(self.__entity)
+        session.commit()

@@ -8,72 +8,49 @@ from components.table import TableComponent
 
 class ManageUsersFrame(tk.Frame):
     def __init__(self, parent, app):
-        super().__init__(parent)
+        tk.Frame.__init__(self, parent)
         self.app = app
-        self.hrms = HRMS()
 
-        self.grid_columnconfigure(0, weight=1)
-        self.grid_rowconfigure(1, weight=1) 
+        self.grid_columnconfigure(tuple(range(2)), weight=1)
         tk.Label(self, text="Users", font=self.app.title_font).grid(row=0, column=0, sticky="w")
         tk.Button(self, text="Add User", command=self.add_user, font=self.app.base_font, bg="blue", fg="white").grid(row=0, column=1, sticky='e')
 
-        self.table_component = TableComponent(
+        self.table = TableComponent(
             self,
-            headings = ['First Name', 'Last Name', 'Phone', 'Role', 'Edit', 'Delete'],
-            data=self.hrms.users,
-            action_callbacks={
-                'edit': self.edit_user,
-                'delete': self.delete_user
-            },
-            base_font_bold = self.app.base_font_bold
+            headings = ['Name', 'Phone', 'Role', 'Actions'],
+            data=self.app.hrms.users,
+            get_row=self.get_row
         )
-        self.table_component.grid(row=1, column=0, columnspan=2, sticky='nsew')
-        self.populate_users()
+        self.table.grid(row=1, column=0, columnspan=2, sticky='ew')
 
-    # def populate_users(self):
-    #     for row, user in enumerate(self.hrms.users, start=1):
-    #         first_name = f"{user.first_name}"
-    #         last_name = f"{user.last_name}"
-    #         phone = user.phone
-    #         role = user.role
+    def get_row(self, table, row, user):
+        tk.Label(table, text=f"{user.first_name} {user.last_name}", anchor='w', font=self.app.base_font).grid(row=row, column=0, sticky='ew')
+        tk.Label(table, text=user.phone, anchor='w', font=self.app.base_font).grid(row=row, column=1, sticky='ew')
+        cb = ttk.Combobox(table, values=ROLE_OPTIONS)
+        cb.set(user.role)
+        cb.bind('<<ComboboxSelected>>', lambda e, user=user: self.role_changed(user, e.widget.get()))   
+        cb.grid(row=row, column=2, sticky='ew')
+        actions_frame = tk.Frame(table)
+        actions_frame.grid(row=row, column=3, sticky='ew')
+        actions_frame.grid_columnconfigure(tuple(range(2)), weight=1)
+        tk.Button(actions_frame, text='✎', command=lambda user=user: self.edit_user(user)).grid(row=0, column=0, sticky='ew')
+        tk.Button(actions_frame, text='✖', command=lambda user=user: self.delete_user(user)).grid(row=0, column=1, sticky='ew')
 
-    #         tk.Label(self.table_component, text=first_name, anchor='center', font=self.app.base_font).grid(row=row, column=0, sticky='nsew')
-    #         tk.Label(self.table_component, text=last_name, anchor='center', font=self.app.base_font).grid(row=row, column=1, sticky='nsew')
-    #         tk.Label(self.table_component, text=phone, anchor='center', font=self.app.base_font).grid(row=row, column=2, sticky='nsew')
-
-    #         cb = ttk.Combobox(self.table_component, values=ROLE_OPTIONS)
-    #         cb.set(role)
-    #         cb.bind('<<ComboboxSelected>>', lambda e, user=user: self.role_changed(user, e.widget.get()))   
-    #         cb.grid(row=row, column=3, sticky='nsew')
-    def populate_users(self):
-        user_data_dicts = []
-        for user in self.hrms.users:
-            user_dict = {
-                'First Name': user.first_name,
-                'Last Name': user.last_name,
-                'Phone': user.phone,
-                'Role': user.role,
-            }
-            user_data_dicts.append(user_dict)
-        self.table_component.refresh_data(user_data_dicts)
+    def refresh_user_list(self):
+        self.table.update_data(self.app.hrms.users)
 
     def role_changed(self, user, role):
         if user.role != role:
             user.set_role(role)
 
     def add_user(self):
-        popup = AddEditUserPopup(self, self.app)
+        popup = AddEditUserPopup(self)
         self.wait_window(popup)
 
     def edit_user(self, user):
-        popup = AddEditUserPopup(self, self.app, user)
+        popup = AddEditUserPopup(self, user)
         self.wait_window(popup)
     
     def delete_user(self, user):
-        popup = DeleteUserPopup(self, self.app, user)
+        popup = DeleteUserPopup(self, user)
         self.wait_window(popup)
-    
-    def refresh_user_list(self):
-        self.hrms = HRMS()
-        self.populate_users()
-

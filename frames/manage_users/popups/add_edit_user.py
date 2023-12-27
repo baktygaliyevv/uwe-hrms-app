@@ -4,10 +4,11 @@ from orm.user import User
 from constants.constants import ROLE_OPTIONS
 
 class AddEditUserPopup(tk.Toplevel):
-    def __init__(self, parent, app, user=None):
+    def __init__(self, parent, user=None):
         tk.Toplevel.__init__(self, parent)
         self.title("Add/Edit User")
-        self.app = app
+        self.parent = parent
+        self.app = parent.app
         self.user = user
         
         self.first_name_var = tk.StringVar()
@@ -68,4 +69,5 @@ class AddEditUserPopup(tk.Toplevel):
                 role
             ))
 
+        self.parent.refresh_user_list()
         self.destroy()

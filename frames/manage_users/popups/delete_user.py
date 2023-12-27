@@ -3,16 +3,12 @@ from tkinter import messagebox
 from orm.user import User
 
 class DeleteUserPopup(tk.Toplevel):
-    def __init__(self, parent, app, user=None):
+    def __init__(self, parent, user=None):
         tk.Toplevel.__init__(self, parent)
         self.title("Delete User")
-        self.app = app
+        self.parent = parent
+        self.app = parent.app
         self.user = user
-
-        if not user:
-            messagebox.showerror("Error", "No user data provided.")
-            self.destroy()
-            return
 
         message = f"Are you sure you want to delete {user.first_name} {user.last_name}?"
         tk.Label(self, text=message).grid(row=0, column=0, columnspan=2, padx=10, pady=10)
@@ -28,10 +24,10 @@ class DeleteUserPopup(tk.Toplevel):
             try:
                 self.app.hrms.delete_user(self.user)
                 messagebox.showinfo("Success", "User deleted successfully.")
-                self.app.refresh_user_list()
+                self.parent.refresh_user_list()
             except Exception as e:
                 messagebox.showerror("Error", f"An error occurred: {e}")
-        self.master.refresh_user_list()
+        self.parent.refresh_user_list()
         self.destroy()
 
     def cancel_delete(self):

@@ -1,12 +1,14 @@
 import tkinter as tk
 from tkinter import ttk
 from orm.user import User
+from constants.constants import ROLE_OPTIONS
 
 class AddEditUserPopup(tk.Toplevel):
-    def __init__(self, parent, app, user=None):
+    def __init__(self, parent, user=None):
         tk.Toplevel.__init__(self, parent)
         self.title("Add/Edit User")
-        self.app = app
+        self.parent = parent
+        self.app = parent.app
         self.user = user
         
         self.first_name_var = tk.StringVar()
@@ -36,8 +38,7 @@ class AddEditUserPopup(tk.Toplevel):
         tk.Entry(self, textvariable=self.password_var).grid(row=2, column=1, padx=10, pady=5)
 
         tk.Label(self, text="Role:").grid(row=3, column=0, padx=10, pady=5)
-        role_options = ['admin', 'manager', 'chef', 'staff', 'courier', 'client']
-        role_dropdown = ttk.Combobox(self, textvariable=self.role_var, values=role_options)
+        role_dropdown = ttk.Combobox(self, textvariable=self.role_var, values=ROLE_OPTIONS)
         role_dropdown.grid(row=3, column=1, padx=10, pady=5)
 
         save_button = tk.Button(self, text="Save", command=self.save_user)
@@ -68,4 +69,5 @@ class AddEditUserPopup(tk.Toplevel):
                 role
             ))
 
+        self.parent.refresh_user_list()
         self.destroy()

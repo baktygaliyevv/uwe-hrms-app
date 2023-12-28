@@ -4,9 +4,7 @@ from utils.random_string import get_random_string
 from utils.hash_password import hash_password
 
 class User:
-    '''
-        Pass either user_entity to create a User from UserEntity or all other parameters to create an entirely new User
-    '''
+    '''Pass either user_entity to create a User from UserEntity or all other parameters to create an entirely new User'''
     def __init__(self, first_name=None, last_name=None, phone=None, password=None, role=None, user_entity=None):
         if user_entity:
             self.__entity = user_entity

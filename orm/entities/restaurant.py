@@ -6,7 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 metadata = Base.metadata
 
-class Restaurant(Base):
+class RestaurantEntity(Base):
     __tablename__ = 'restaurants'
 
     id = Column(Integer, primary_key=True)

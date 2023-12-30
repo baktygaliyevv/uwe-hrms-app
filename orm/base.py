@@ -5,8 +5,8 @@ from orm.user import User
 from orm.entities.user import UserEntity
 from orm.restaurant import Restaurant
 from orm.entities.restaurant import RestaurantEntity
-from orm.entities.table import TableEntity
 from orm.table import Table
+from orm.entities.table import TableEntity
 
 class HRMS:
     users: list[User] = []
@@ -45,3 +45,5 @@ class HRMS:
     def delete_table(self, table: Table):
         """Delete a table from the database."""
         table.delete() 
+        session.commit()
+        self.tables.remove(table)

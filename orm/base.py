@@ -5,15 +5,19 @@ from orm.user import User
 from orm.entities.user import UserEntity
 from orm.restaurant import Restaurant
 from orm.entities.restaurant import RestaurantEntity
+from orm.entities.table import TableEntity
+from orm.table import Table
 
 class HRMS:
     users: list[User] = []
     restaurants: list[Restaurant] = []
+    tables: list[Table] = []
 
     def __init__(self):
         self.users = [User(user_entity=user_entity) for user_entity in session.scalars(select(UserEntity))]
         self.restaurants = [Restaurant(restaurant_entity=restaurant_entity) for restaurant_entity in session.scalars(select(RestaurantEntity))]
-
+        self.tables = [Table(table_entity=table_entity) for table_entity in session.scalars(select(TableEntity))]
+ 
     def find_user(self, phone):
         return next(user for user in self.users if user.phone == phone)
 
@@ -32,3 +36,12 @@ class HRMS:
         restaurant.delete()
         session.commit()
         self.restaurants.remove(restaurant)
+
+    def add_table(self, table: Table):
+        """Add a new table to the database."""
+        session.add(table.__entity)
+        session.commit()
+
+    def delete_table(self, table: Table):
+        """Delete a table from the database."""
+        table.delete() 

@@ -15,6 +15,6 @@ class RestaurantProduct(Base):
     count = Column(Integer, nullable=False)
 
     product = relationship('Product')
-    restaurant = relationship('Restaurant')
+    restaurant = relationship('RestaurantEntity')
 
 

@@ -1,0 +1,55 @@
+import tkinter as tk
+from tkinter import ttk
+from orm.product import Product
+
+class AddEditProductPopup(tk.Toplevel):
+    def __init__(self, parent, app, product=None):
+        tk.Toplevel.__init__(self, parent)
+        self.title("Add/Edit Product")
+        self.app = app
+        self.product = product
+        
+        self.name_var = tk.StringVar()
+        self.vegan_var = tk.BooleanVar()
+        self.vegetarian_var = tk.BooleanVar()
+        self.gluten_free_var = tk.BooleanVar()
+
+        if product:
+            self.name_var.set(product.name)
+            self.vegan_var.set(product.vegan)
+            self.vegetarian_var.set(product.vegetarian)
+            self.gluten_free_var.set(product.gluten_free)
+
+        tk.Label(self, text="Name:").grid(row=0, column=0, padx=10, pady=5)
+        tk.Entry(self, textvariable=self.name_var).grid(row=0, column=1, padx=10, pady=5)
+        
+        tk.Checkbutton(self, text="Vegan", variable=self.vegan_var).grid(row=1, column=0, padx=10, pady=5, sticky="w")
+        tk.Checkbutton(self, text="Vegetarian", variable=self.vegetarian_var).grid(row=2, column=0, padx=10, pady=5, sticky="w")
+        tk.Checkbutton(self, text="Gluten Free", variable=self.gluten_free_var).grid(row=3, column=0, padx=10, pady=5, sticky="w")
+
+        save_button = tk.Button(self, text="Save", command=self.save_product)
+        save_button.grid(row=4, column=0, columnspan=2, pady=10)
+
+    def save_product(self):
+        name = self.name_var.get()
+        vegan = self.vegan_var.get()
+        vegetarian = self.vegetarian_var.get()
+        gluten_free = self.gluten_free_var.get()
+
+        if self.product:
+            self.product.name = name
+            self.product.vegan = vegan
+            self.product.vegetarian = vegetarian
+            self.product.gluten_free = gluten_free
+            
+            self.product.update()
+        else:
+           
+            self.app.product_manager.add_product(Product(
+                name,
+                vegan,
+                vegetarian,
+                gluten_free
+            ))
+
+        self.destroy()

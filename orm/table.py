@@ -1,5 +1,5 @@
 from orm.db import session
-from orm.entities.table import TableEntity
+from orm.entities.entities import Table as TableEntity
 
 class Table:
     """Pass either table_entity to create a Table from TableEntity or all other parameters to create an entirely new Table"""

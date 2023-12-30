@@ -1,12 +1,10 @@
 from sqlalchemy import select
 from orm.db import session
+from orm.entities.entities import User as UserEntity, Restaurant as RestaurantEntity, Table as TableEntity
 
 from orm.user import User
-from orm.entities.user import UserEntity
 from orm.restaurant import Restaurant
-from orm.entities.restaurant import RestaurantEntity
 from orm.table import Table
-from orm.entities.table import TableEntity
 
 class HRMS:
     users: list[User] = []

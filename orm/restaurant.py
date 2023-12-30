@@ -1,5 +1,5 @@
 from orm.db import session
-from orm.entities.restaurant import RestaurantEntity
+from orm.entities.entities import Restaurant as RestaurantEntity
 
 class Restaurant:
     '''Pass either restaurant_entity to create a Restaurant from RestaurantEntity or all other parameters to create an entirely new Restaurant'''

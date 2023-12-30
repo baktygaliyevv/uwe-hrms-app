@@ -1,5 +1,5 @@
 from orm.db import session
-from orm.entities.user import UserEntity
+from orm.entities.entities import User as UserEntity
 from utils.random_string import get_random_string
 from utils.hash_password import hash_password
 

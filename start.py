@@ -14,6 +14,7 @@ from orm.base import HRMS
 
 from frames.login.login import LoginFrame
 from frames.manage_users.manage_users import ManageUsersFrame
+from frames.manage_restaurants.manage_restaurants import ManageRestaurantsFrame
 
 class MainWindow(tk.Tk):
     def __init__(self, *args, **kwargs):
@@ -37,13 +38,13 @@ class MainWindow(tk.Tk):
 
         self.frames = {}
 
-        for F in (LoginFrame, ManageUsersFrame):
+        for F in (LoginFrame, ManageUsersFrame, ManageRestaurantsFrame):
             frame = F(container, self)
             self.frames[F.__name__] = frame
             frame.grid(row = 0, column = 0, sticky = "nsew")
 
-        # self.show_frame('LoginFrame')
-        self.show_frame('ManageUsersFrame')
+        # self.show_frame('LoginFrame') # TODO return when MainMenu is done
+        self.show_frame('ManageRestaurantsFrame')
 
     def show_frame(self, cont):
         frame = self.frames[cont]    

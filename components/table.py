@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 class TableComponent(tk.Frame):
+    '''get_row(table_frame, row, obj)'''
     def __init__(self, parent, headings, data, get_row):
         tk.Frame.__init__(self, parent)
         self.parent = parent

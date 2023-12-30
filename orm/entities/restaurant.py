@@ -11,5 +11,3 @@ class RestaurantEntity(Base):
 
     id = Column(Integer, primary_key=True)
     city = Column(String(50, 'utf8mb3_unicode_ci'), nullable=False)
-
-    tables = relationship('TableEntity', back_populates='restaurants')

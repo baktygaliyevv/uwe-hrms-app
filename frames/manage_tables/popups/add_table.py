@@ -18,10 +18,10 @@ class AddTablePopup(tk.Toplevel):
         tk.Entry(self, textvariable=self.capacity_var).grid(row=1, column=1, padx=10, pady=5)
 
         tk.Button(self, text="Save", command=self.save).grid(row=2, column=0, columnspan=2, pady=10)
-        
+    # вот тут нужен фикс с бд связанный 
     def save(self):
-        number = self.number_var.get()
+        id = self.number_var.get()
         capacity = self.capacity_var.get()
-        self.app.hrms.add_table(Table(number, capacity))
+        self.app.hrms.add_table(Table(id, capacity))
         self.parent.refresh()
         self.destroy()

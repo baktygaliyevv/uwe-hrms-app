@@ -13,4 +13,4 @@ class TableEntity(Base):
     restaurant_id = Column(ForeignKey('restaurants.id'), nullable=False, index=True)
     capacity = Column(Integer, nullable=False)
 
-    restaurant = relationship('RestaurantEntity', back_populates='tables')
+    # restaurants = relationship('RestaurantEntity')

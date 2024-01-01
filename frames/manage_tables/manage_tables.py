@@ -40,7 +40,7 @@ class ManageTablesFrame(tk.Frame):
         )
         self.table2.grid(row=2, column=1, sticky='nsew')
 
-    def refresh(self, _):
+    def refresh(self, _ = None):
         data1, data2 = split_tables(self.restaurant_dropdown.get().get_tables())
         self.table1.update_data(data1)
         self.table2.update_data(data2)

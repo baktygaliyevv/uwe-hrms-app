@@ -17,6 +17,9 @@ class AddRestaurantPopup(tk.Toplevel):
         
     def save(self):
         city = self.city_var.get()
-        self.app.hrms.add_restaurant(Restaurant(city))
+        self.app.hrms.add_restaurant(Restaurant(
+            self.app.hrms,
+            city=city
+        ))
         self.parent.refresh()
         self.destroy()

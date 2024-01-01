@@ -1,9 +1,12 @@
 from orm.db import session
 from orm.entities.entities import Restaurant as RestaurantEntity
+from orm.table import Table
 
 class Restaurant:
     '''Pass either restaurant_entity to create a Restaurant from RestaurantEntity or all other parameters to create an entirely new Restaurant'''
-    def __init__(self, city = None, restaurant_entity: RestaurantEntity = None):
+    def __init__(self, hrms, city = None, restaurant_entity: RestaurantEntity = None):
+        self.__hrms = hrms
+
         if restaurant_entity:
             self.__entity = restaurant_entity
         else: 
@@ -13,13 +16,19 @@ class Restaurant:
             session.add(self.__entity)
             session.commit()
         
-        self.__id = self.__entity.id
+        self.id = self.__entity.id
         self.city = self.__entity.city
-        
-    @property
-    def id(self):
-        return self.__entity.id
 
     def delete(self):
         session.delete(self.__entity)
         session.commit()
+
+    def get_tables(self):
+        return list(filter(lambda t, restaurant=self: t.get_restaurant() == restaurant, self.__hrms.__tables__))
+
+    def add_table(self, table: Table):
+        self.__hrms.__tables__.append(table)
+
+    def delete_table(self, table: Table):
+        table.delete() 
+        self.__hrms.__tables__.remove(table)

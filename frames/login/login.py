@@ -28,7 +28,7 @@ class LoginFrame(tk.Frame):
         phone = self.phone_entry.get()
         password = self.password_entry.get()
 
-        user = self.app.hrms.find_user(phone)
+        user = self.app.hrms.get_user(phone=phone)
 
         if not user or not user.check_password(password):
             return messagebox.showerror("Login Failed", "Incorrect phone number or password.")

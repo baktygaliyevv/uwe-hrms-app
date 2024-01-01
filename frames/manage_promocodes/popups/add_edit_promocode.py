@@ -1,8 +1,6 @@
 import tkinter as tk
 from tkcalendar import Calendar
 from datetime import date
-from datetime import datetime
-from orm.restaurant import Restaurant
 from orm.promocode import Promocode
 
 class AddEditPromocodePopup(tk.Toplevel):
@@ -46,6 +44,7 @@ class AddEditPromocodePopup(tk.Toplevel):
                 self.promocode.set_valid_till(self.calendar.selection_get())
         else:
             self.app.hrms.add_promocode(Promocode(
+                self.app.hrms,
                 id=self.promocode_id.get(),
                 discount=self.discount.get(),
                 valid_till=self.calendar.selection_get()

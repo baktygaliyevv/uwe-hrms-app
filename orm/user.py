@@ -64,6 +64,9 @@ class User:
         hash = hash_password(password, self.__salt)
         return hash == self.__hash
     
+    def has_password(self):
+        return self.__hash and self.__salt
+    
 
     def delete(self):
         session.delete(self.__entity)

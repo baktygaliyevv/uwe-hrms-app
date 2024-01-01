@@ -15,6 +15,10 @@ class Restaurant:
         
         self.__id = self.__entity.id
         self.city = self.__entity.city
+        
+    @property
+    def id(self):
+        return self.__entity.id
 
     def delete(self):
         session.delete(self.__entity)

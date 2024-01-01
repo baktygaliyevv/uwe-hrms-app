@@ -2,8 +2,9 @@ import tkinter as tk
 from orm.table import Table
 
 class AddTablePopup(tk.Toplevel):
-    def __init__(self, parent):
-        tk.Toplevel.__init__(self, parent)
+    def __init__(self, parent, restaurant_id):
+        super().__init__(parent)
+        self.restaurant_id = restaurant_id
         self.title("Add Table")
         self.parent = parent
         self.app = parent.app
@@ -18,10 +19,13 @@ class AddTablePopup(tk.Toplevel):
         tk.Entry(self, textvariable=self.capacity_var).grid(row=1, column=1, padx=10, pady=5)
 
         tk.Button(self, text="Save", command=self.save).grid(row=2, column=0, columnspan=2, pady=10)
-    # вот тут нужен фикс с бд связанный 
+
     def save(self):
-        id = self.number_var.get()
+        table_number = self.number_var.get() 
         capacity = self.capacity_var.get()
-        self.app.hrms.add_table(Table(id, capacity))
+
+        new_table = Table(id=table_number, capacity=capacity, restaurant_id=self.restaurant_id)
+        self.app.hrms.add_table(new_table)
         self.parent.refresh()
         self.destroy()
+

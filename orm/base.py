@@ -1,4 +1,5 @@
 from sqlalchemy import select
+from sqlalchemy.orm import selectinload
 from orm.db import session
 from orm.entities.entities import User as UserEntity, Restaurant as RestaurantEntity, Table as TableEntity
 
@@ -36,12 +37,12 @@ class HRMS:
         self.restaurants.remove(restaurant)
 
     def add_table(self, table: Table):
-        """Add a new table to the database."""
-        session.add(table.__entity)
+        session.add(table.entity)
         session.commit()
 
     def delete_table(self, table: Table):
-        """Delete a table from the database."""
         table.delete() 
-        session.commit()
         self.tables.remove(table)
+
+    def reload_tables(self):
+        self.tables = [Table(table_entity=table_entity) for table_entity in session.query(TableEntity).options(selectinload(TableEntity.restaurant)).all()]

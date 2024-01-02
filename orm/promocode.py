@@ -1,10 +1,10 @@
 from datetime import date 
 from orm.db import session
-from orm.entities.promocode import Promocode as PromocodeEntity
+from orm.entities.entities import Promocode as PromocodeEntity
 
 class Promocode:
     '''Pass either promocode_entity to create a Promocode from PromocodeEntity or all other parameters to create an entirely new Promocode'''
-    def __init__(self, id = None, discount = None, valid_till = None, promocode_entity: PromocodeEntity = None):
+    def __init__(self, hrms, id = None, discount = None, valid_till = None, promocode_entity: PromocodeEntity = None):
         if promocode_entity:
             self.__entity = promocode_entity
         else: 

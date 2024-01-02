@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import messagebox
-from orm.user import User
 
 # FIXME переписать на tk.messagebox.askquestion
 class DeleteUserPopup(tk.Toplevel):

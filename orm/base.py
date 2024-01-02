@@ -1,25 +1,32 @@
 from sqlalchemy import select
+from sqlalchemy.orm import selectinload
 from orm.db import session
+from orm.entities.entities import User as UserEntity, Restaurant as RestaurantEntity, Table as TableEntity, Promocode as PromocodeEntity
 
 from orm.user import User
-from orm.entities.user import UserEntity
 from orm.restaurant import Restaurant
-from orm.entities.restaurant import RestaurantEntity
+from orm.table import Table
 from orm.promocode import Promocode
-from orm.entities.promocode import Promocode as PromocodeEntity
 
 class HRMS:
     users: list[User] = []
     restaurants: list[Restaurant] = []
     promocodes: list[Promocode] = []
 
-    def __init__(self):
-        self.users = [User(user_entity=user_entity) for user_entity in session.scalars(select(UserEntity))]
-        self.restaurants = [Restaurant(restaurant_entity=restaurant_entity) for restaurant_entity in session.scalars(select(RestaurantEntity))]
-        self.promocodes = [Promocode(promocode_entity=promocode_entity) for promocode_entity in session.scalars(select(PromocodeEntity))]
+    __tables__: list[Table] = []
 
-    def find_user(self, phone):
-        return next(user for user in self.users if user.phone == phone)
+    def __init__(self):
+        self.users = [User(self, user_entity=user_entity) for user_entity in session.scalars(select(UserEntity))]
+        self.restaurants = [Restaurant(self, restaurant_entity=restaurant_entity) for restaurant_entity in session.scalars(select(RestaurantEntity))]
+        self.promocodes = [Promocode(self, promocode_entity=promocode_entity) for promocode_entity in session.scalars(select(PromocodeEntity))]
+
+        self.__tables__ = [Table(self, table_entity=table_entity) for table_entity in session.scalars(select(TableEntity))]
+
+    def get_user(self, id = None, phone = None):
+        if id:
+            return next(user for user in self.users if user.id == id)
+        if phone:
+            return next(user for user in self.users if user.phone == phone)
 
     def add_user(self, user: User):
         self.users.append(user)
@@ -27,6 +34,12 @@ class HRMS:
     def delete_user(self, user: User):
         user.delete()
         self.users.remove(user)
+
+    def get_restaurant(self, id = None, city = None):
+        if id:
+            return next(restaurant for restaurant in self.restaurants if restaurant.id == id)
+        if city:
+            return next(restaurant for restaurant in self.restaurants if restaurant.city == city)
 
     def add_restaurant(self, restaurant: Restaurant):
         self.restaurants.append(restaurant)

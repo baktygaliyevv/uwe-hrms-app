@@ -62,11 +62,12 @@ class AddEditUserPopup(tk.Toplevel):
                 self.user.set_role(role)
         else:
             self.app.hrms.add_user(User(
-                first_name,
-                last_name,
-                phone,
-                password,
-                role
+                self.app.hrms,
+                first_name=first_name,
+                last_name=last_name,
+                phone=phone,
+                password=password,
+                role=role
             ))
 
         self.parent.refresh_user_list()

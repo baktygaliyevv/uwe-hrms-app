@@ -1,5 +1,6 @@
 import tkinter as tk
 from orm.table import Table
+from tkinter import messagebox
 
 class AddTablePopup(tk.Toplevel):
     def __init__(self, parent, restaurant):
@@ -22,11 +23,14 @@ class AddTablePopup(tk.Toplevel):
         tk.Button(self, text="Save", command=self.save).grid(row=3, column=0, columnspan=2, sticky='ew')
 
     def save(self):
-        self.app.hrms.add_table(Table(
-            self.app.hrms, 
-            capacity=self.capacity_var.get(), 
-            restaurant=self.restaurant
-        ))
-        self.parent.refresh()
-        self.destroy()
+            new_table = Table(
+                self.app.hrms,
+                capacity=self.capacity_var.get(),
+                restaurant=self.restaurant 
+            )
+            self.restaurant.add_table(new_table)
+            self.parent.refresh()
+            self.destroy()
+
+
 

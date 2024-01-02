@@ -54,7 +54,7 @@ class ManageTablesFrame(tk.Frame):
         restaurant = self.restaurant_dropdown.get()
         if restaurant is None:
             return messagebox.showerror("Error", "Please select a restaurant first.")
-        popup = AddTablePopup(self, restaurant)  # Pass the selected restaurant ID to the popup
+        popup = AddTablePopup(self, restaurant)
         self.wait_window(popup)
 
     def delete_table(self, table_data):

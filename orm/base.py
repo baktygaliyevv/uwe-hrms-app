@@ -1,18 +1,20 @@
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 from orm.db import session
-from orm.entities.entities import User as UserEntity, Restaurant as RestaurantEntity, Table as TableEntity, Promocode as PromocodeEntity, Booking as BookingEntity
+from orm.entities.entities import User as UserEntity, Restaurant as RestaurantEntity, Table as TableEntity, Promocode as PromocodeEntity, Product as ProductEntity, Booking as BookingEntity
 
 from orm.user import User
 from orm.restaurant import Restaurant
 from orm.table import Table
 from orm.promocode import Promocode
+from orm.product import Product
 from orm.booking import Booking
 
 class HRMS:
     users: list[User] = []
     restaurants: list[Restaurant] = []
     promocodes: list[Promocode] = []
+    products: list[Product] = []
 
     __tables__: list[Table] = []
     __bookings__: list[Booking] = []
@@ -21,6 +23,7 @@ class HRMS:
         self.users = [User(self, user_entity=user_entity) for user_entity in session.scalars(select(UserEntity))]
         self.restaurants = [Restaurant(self, restaurant_entity=restaurant_entity) for restaurant_entity in session.scalars(select(RestaurantEntity))]
         self.promocodes = [Promocode(self, promocode_entity=promocode_entity) for promocode_entity in session.scalars(select(PromocodeEntity))]
+        self.products = [Product(self, product_entity=product_entity) for product_entity in session.scalars(select(ProductEntity))]
 
         self.__tables__ = [Table(self, table_entity=table_entity) for table_entity in session.scalars(select(TableEntity))]
         self.__bookings__ = [Booking(self, booking_entity=booking_entity) for booking_entity in session.scalars(select(BookingEntity))]
@@ -60,3 +63,10 @@ class HRMS:
     def delete_promocode(self, promocode: Promocode):
         promocode.delete()
         self.promocodes.remove(promocode)
+    
+    def add_product(self, product: Product):
+        self.products.append(product)
+
+    def delete_product(self, product: Product):
+        product.delete()
+        self.products.remove(product)

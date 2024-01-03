@@ -46,6 +46,3 @@ class ManageProductsListFrame(tk.Frame):
         if action == 'yes':
             self.app.hrms.delete_product(product)
             self.refresh()
-
-    def save(self):
-        self.parent.refresh()

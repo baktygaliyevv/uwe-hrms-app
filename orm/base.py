@@ -7,6 +7,7 @@ from orm.restaurant import Restaurant, RestaurantEntity
 from orm.table import Table, TableEntity
 from orm.promocode import Promocode, PromocodeEntity
 from orm.product import Product, ProductEntity
+from orm.booking import Booking, BookingEntity
 from orm.menu_category import MenuCategory, MenuCategoryEntity
 from orm.menu_item import MenuItem, MenuEntity
 
@@ -19,6 +20,7 @@ class HRMS:
     menu_items: list[MenuItem] = []
 
     __tables__: list[Table] = []
+    __bookings__: list[Booking] = []
 
     def __init__(self):
         self.users = [User(self, user_entity=user_entity) for user_entity in session.scalars(select(UserEntity))]
@@ -29,6 +31,7 @@ class HRMS:
         self.menu_items = [MenuItem(self, menu_entity=menu_entity) for menu_entity in session.scalars(select(MenuEntity))]
 
         self.__tables__ = [Table(self, table_entity=table_entity) for table_entity in session.scalars(select(TableEntity))]
+        self.__bookings__ = [Booking(self, booking_entity=booking_entity) for booking_entity in session.scalars(select(BookingEntity))]
 
     def get_user(self, id = None, phone = None):
         if id:

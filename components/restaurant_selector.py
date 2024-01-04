@@ -2,14 +2,13 @@ import tkinter as tk
 from tkinter import ttk
 
 class RestaurantSelectorComponent(tk.Frame):
-    def __init__(self, parent):
+    def __init__(self, parent, app):
         tk.Frame.__init__(self, parent)
-        self.parent = parent
-        self.app = parent.app
+        self.app = app
 
         self.dropdown = ttk.Combobox(self, values=[restaurant.city for restaurant in self.app.hrms.restaurants])
         self.dropdown.set(self.app.hrms.restaurants[0].city)
-        self.dropdown.bind('<<ComboboxSelected>>', lambda e: self.event_generate('<<RestaurantSelected>>'))
+        self.dropdown.bind('<<ComboboxSelected>>', lambda _: self.event_generate('<<RestaurantSelected>>'))
         self.dropdown.pack()
 
     def get(self):

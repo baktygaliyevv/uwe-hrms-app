@@ -16,11 +16,13 @@ class ManageTablesFrame(tk.Frame):
         self.app = app
 
         self.grid_columnconfigure(tuple(range(2)), weight=1)
-        tk.Label(self, text="Tables", font=self.app.title_font).grid(row=0, column=0, sticky="w")
 
-        self.restaurant_dropdown = RestaurantSelectorComponent(self)
+        title_frame = tk.Frame(self)
+        tk.Label(title_frame, text="Tables at ", font=self.app.title_font).grid(row=0, column=0, sticky="w")
+        self.restaurant_dropdown = RestaurantSelectorComponent(title_frame, app)
         self.restaurant_dropdown.bind('<<RestaurantSelected>>', self.refresh)
-        self.restaurant_dropdown.grid(row=1, column=0, sticky='ew')
+        self.restaurant_dropdown.grid(row=0, column=1, sticky='ew')
+        title_frame.grid(row=0, column=0, sticky='ew')
 
         tk.Button(self, text="Add Table", command=self.add_table, font=self.app.base_font, bg="blue", fg="white").grid(row=0, column=1, sticky='e')
 

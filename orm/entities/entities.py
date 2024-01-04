@@ -1,5 +1,5 @@
 # coding: utf-8
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Table, Text, text
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Table as STable, Text, text
 from sqlalchemy.dialects.mysql import ENUM, TEXT, TINYINT, VARCHAR
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
@@ -73,7 +73,7 @@ class Menu(Base):
 
     id = Column(Integer, primary_key=True)
     menu_category_id = Column(ForeignKey('menu_categories.id'), nullable=False, index=True)
-    name = Column(Integer, nullable=False)
+    name = Column(Text(collation='utf8mb3_unicode_ci'), nullable=False)
     price = Column(Integer, nullable=False)
 
     menu_category = relationship('MenuCategory')
@@ -138,7 +138,7 @@ class DeliveryMenu(Base):
     menu = relationship('Menu')
 
 
-t_menu_products = Table(
+t_menu_products = STable(
     'menu_products', metadata,
     Column('menu_id', ForeignKey('menu.id'), nullable=False, index=True),
     Column('product_id', ForeignKey('products.id'), nullable=False, index=True)

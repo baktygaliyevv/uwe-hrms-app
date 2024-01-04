@@ -17,7 +17,7 @@ class Product:
             session.add(self.__entity)
             session.commit()
 
-        self.__id = self.__entity.id
+        self.id = self.__entity.id
         self.name = self.__entity.name
         self.vegan = self.__entity.vegan
         self.vegetarian = self.__entity.vegetarian

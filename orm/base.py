@@ -1,19 +1,22 @@
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 from orm.db import session
-from orm.entities.entities import User as UserEntity, Restaurant as RestaurantEntity, Table as TableEntity, Promocode as PromocodeEntity, Product as ProductEntity
 
-from orm.user import User
-from orm.restaurant import Restaurant
-from orm.table import Table
-from orm.promocode import Promocode
-from orm.product import Product 
+from orm.user import User, UserEntity
+from orm.restaurant import Restaurant, RestaurantEntity
+from orm.table import Table, TableEntity
+from orm.promocode import Promocode, PromocodeEntity
+from orm.product import Product, ProductEntity
+from orm.menu_category import MenuCategory, MenuCategoryEntity
+from orm.menu_item import MenuItem, MenuEntity
 
 class HRMS:
     users: list[User] = []
     restaurants: list[Restaurant] = []
     promocodes: list[Promocode] = []
     products: list[Product] = []
+    menu_categories: list[MenuCategory] = []
+    menu_items: list[MenuItem] = []
 
     __tables__: list[Table] = []
 
@@ -22,6 +25,8 @@ class HRMS:
         self.restaurants = [Restaurant(self, restaurant_entity=restaurant_entity) for restaurant_entity in session.scalars(select(RestaurantEntity))]
         self.promocodes = [Promocode(self, promocode_entity=promocode_entity) for promocode_entity in session.scalars(select(PromocodeEntity))]
         self.products = [Product(self, product_entity=product_entity) for product_entity in session.scalars(select(ProductEntity))]
+        self.menu_categories = [MenuCategory(self, menu_category_entity=menu_category_entity) for menu_category_entity in session.scalars(select(MenuCategoryEntity))]
+        self.menu_items = [MenuItem(self, menu_entity=menu_entity) for menu_entity in session.scalars(select(MenuEntity))]
 
         self.__tables__ = [Table(self, table_entity=table_entity) for table_entity in session.scalars(select(TableEntity))]
 
@@ -60,6 +65,9 @@ class HRMS:
     def delete_promocode(self, promocode: Promocode):
         promocode.delete()
         self.promocodes.remove(promocode)
+
+    def get_product(self, id):
+        return next(product for product in self.products if product.id == id)
     
     def add_product(self, product: Product):
         self.products.append(product)
@@ -67,3 +75,23 @@ class HRMS:
     def delete_product(self, product: Product):
         product.delete()
         self.products.remove(product)
+
+    def get_menu_category(self, id):
+        return next(menu_category for menu_category in self.menu_categories if menu_category.id == id)
+    
+    def add_menu_category(self, menu_category):
+        self.menu_categories.append(menu_category)
+
+    def delete_menu_category(self, menu_category):
+        menu_category.delete()
+        self.menu_categories.remove(menu_category)
+
+    def get_menu_item(self, id):
+        return next(menu_item for menu_item in self.menu_items if menu_item.id == id)
+    
+    def add_menu_item(self, menu_item):
+        self.menu_items.append(menu_item)
+
+    def delete_menu_item(self, menu_item):
+        menu_item.delete()
+        self.menu_items.remove(menu_item)

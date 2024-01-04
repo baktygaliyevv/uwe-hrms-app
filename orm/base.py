@@ -1,13 +1,14 @@
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 from orm.db import session
-from orm.entities.entities import User as UserEntity, Restaurant as RestaurantEntity, Table as TableEntity, Promocode as PromocodeEntity, Product as ProductEntity
+from orm.entities.entities import User as UserEntity, Restaurant as RestaurantEntity, Table as TableEntity, Promocode as PromocodeEntity, Product as ProductEntity, Booking as BookingEntity
 
 from orm.user import User
 from orm.restaurant import Restaurant
 from orm.table import Table
 from orm.promocode import Promocode
-from orm.product import Product 
+from orm.product import Product
+from orm.booking import Booking
 
 class HRMS:
     users: list[User] = []
@@ -16,6 +17,7 @@ class HRMS:
     products: list[Product] = []
 
     __tables__: list[Table] = []
+    __bookings__: list[Booking] = []
 
     def __init__(self):
         self.users = [User(self, user_entity=user_entity) for user_entity in session.scalars(select(UserEntity))]
@@ -24,6 +26,7 @@ class HRMS:
         self.products = [Product(self, product_entity=product_entity) for product_entity in session.scalars(select(ProductEntity))]
 
         self.__tables__ = [Table(self, table_entity=table_entity) for table_entity in session.scalars(select(TableEntity))]
+        self.__bookings__ = [Booking(self, booking_entity=booking_entity) for booking_entity in session.scalars(select(BookingEntity))]
 
     def get_user(self, id = None, phone = None):
         if id:

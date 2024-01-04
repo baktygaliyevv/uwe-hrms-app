@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkcalendar import Calendar
+from tkcalendar import DateEntry
 from datetime import date
 from orm.promocode import Promocode
 
@@ -21,9 +21,10 @@ class AddEditPromocodePopup(tk.Toplevel):
         tk.Entry(self, textvariable=self.discount).grid(row=2, column=1, sticky='ew')
         tk.Label(self, text='Valid till', anchor='w', font=self.app.base_font).grid(row=3, column=0, sticky='ew')
         today = date.today()
-        self.calendar = Calendar(
+        self.calendar = DateEntry(
             self,
             selectmode='day',
+            date_pattern='dd.mm.yyyy',
             year=promocode.valid_till.year if promocode else today.year,
             month=promocode.valid_till.month if promocode else today.month,
             day=promocode.valid_till.day if promocode else today.day
@@ -40,14 +41,14 @@ class AddEditPromocodePopup(tk.Toplevel):
         if self.promocode:
             if self.discount.get() != self.promocode.discount:
                 self.promocode.set_discount(self.discount.get())
-            if self.calendar.selection_get() != self.promocode.valid_till:
-                self.promocode.set_valid_till(self.calendar.selection_get())
+            if self.calendar.get_date() != self.promocode.valid_till:
+                self.promocode.set_valid_till(self.calendar.get_date())
         else:
             self.app.hrms.add_promocode(Promocode(
                 self.app.hrms,
                 id=self.promocode_id.get(),
                 discount=self.discount.get(),
-                valid_till=self.calendar.selection_get()
+                valid_till=self.calendar.get_date()
             ))
         self.parent.refresh()
         self.destroy()

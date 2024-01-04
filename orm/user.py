@@ -2,6 +2,7 @@ from orm.db import session
 from orm.entities.entities import User as UserEntity
 from utils.random_string import get_random_string
 from utils.hash_password import hash_password
+from orm.booking import Booking
 
 class User:
     '''Pass either user_entity to create a User from UserEntity or all other parameters to create an entirely new User'''
@@ -70,3 +71,13 @@ class User:
     def delete(self):
         session.delete(self.__entity)
         session.commit()
+
+    def get_bookings(self):
+        return list(filter(lambda b, user=self: b.get_user() == user, self.__hrms.__bookings__))
+
+    def add_booking(self, booking: Booking):
+        self.__hrms.__bookings__.append(booking)
+
+    def delete_booking(self, booking: Booking):
+        booking.delete() 
+        self.__hrms.__bookings__.remove(booking)

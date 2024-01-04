@@ -25,6 +25,9 @@ class Restaurant:
 
     def get_tables(self):
         return list(filter(lambda t, restaurant=self: t.get_restaurant() == restaurant, self.__hrms.__tables__))
+    
+    def get_table(self, id):
+        return next(table for table in self.get_tables() if table.id == id)
 
     def add_table(self, table: Table):
         self.__hrms.__tables__.append(table)

@@ -35,3 +35,9 @@ class Restaurant:
     def delete_table(self, table: Table):
         table.delete() 
         self.__hrms.__tables__.remove(table)
+
+    def get_orders(self):
+        orders = []
+        for table in self.get_tables():
+            orders.extend(table.get_orders())
+        return orders

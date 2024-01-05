@@ -11,6 +11,7 @@ from orm.booking import Booking, BookingEntity
 from orm.menu_category import MenuCategory, MenuCategoryEntity
 from orm.menu_item import MenuItem, MenuEntity
 from orm.order import Order, OrderEntity
+from orm.delivery import Delivery, DeliveryEntity   
 
 class HRMS:
     users: list[User] = []
@@ -23,6 +24,7 @@ class HRMS:
     __tables__: list[Table] = []
     __bookings__: list[Booking] = []
     __orders__: list[Order] = []
+    __deliveries__: list[Delivery] = []
 
     def __init__(self):
         self.users = [User(self, user_entity=user_entity) for user_entity in session.scalars(select(UserEntity))]
@@ -35,6 +37,7 @@ class HRMS:
         self.__tables__ = [Table(self, table_entity=table_entity) for table_entity in session.scalars(select(TableEntity))]
         self.__bookings__ = [Booking(self, booking_entity=booking_entity) for booking_entity in session.scalars(select(BookingEntity))]
         self.__orders__ = [Order(self, order_entity=order_entity) for order_entity in session.scalars(select(OrderEntity))]
+        self.__deliveries__ = [Delivery(self, delivery_entity=delivery_entity) for delivery_entity in session.scalars(select(DeliveryEntity))]
 
     def get_user(self, id = None, phone = None):
         if id:

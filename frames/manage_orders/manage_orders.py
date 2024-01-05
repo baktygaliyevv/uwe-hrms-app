@@ -5,6 +5,7 @@ from components.restaurant_selector import RestaurantSelectorComponent
 from components.table import TableComponent
 from components.userinfopopup import UserInfoPopupComponent
 from components.promocode_info_popup import PromocodeInfoPopup
+from utils.generate_bill import generate_bill
 
 class ManageOrdersFrame(tk.Frame):
     def __init__(self, parent, app):
@@ -87,6 +88,7 @@ class ManageOrdersFrame(tk.Frame):
     def set_order_complete(self, order):
         order.set_complete()
         self.refresh()
+        generate_bill(order)
     
     def delete_order(self, order):
         action = messagebox.askquestion('Delete order', f'Are you sure you want to delete order # {order.id}?', icon='warning')

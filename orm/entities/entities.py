@@ -73,7 +73,7 @@ class Menu(Base):
 
     id = Column(Integer, primary_key=True)
     menu_category_id = Column(ForeignKey('menu_categories.id'), nullable=False, index=True)
-    name = Column(Integer, nullable=False)
+    name = Column(Text(collation='utf8mb3_unicode_ci'), nullable=False)
     price = Column(Integer, nullable=False)
 
     menu_category = relationship('MenuCategory')

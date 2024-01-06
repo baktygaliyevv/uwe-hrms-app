@@ -1,5 +1,5 @@
 from orm.db import session
-from orm.entities.entities import Restaurant as RestaurantEntity
+from orm.entities.entities import Restaurant as RestaurantEntity, RestaurantProduct as RestaurantProductEntity
 from orm.table import Table
 from orm.restaurant_product import RestaurantProduct
 
@@ -19,7 +19,10 @@ class Restaurant:
         
         self.id = self.__entity.id
         self.city = self.__entity.city
-
+        self.restaurant_products = [
+            RestaurantProduct(hrms, restaurant_product_entity=rp) 
+            for rp in self.__entity.restaurant_products
+        ]
     def delete(self):
         session.delete(self.__entity)
         session.commit()

@@ -20,6 +20,7 @@ from frames.manage_promocodes.manage_promocodes import ManagePromocodesFrame
 from frames.manage_products.manage_products import ManageProductsListFrame
 from frames.manage_bookings.manage_bookings import ManageBookingsFrame
 from frames.manage_menu.manage_menu import ManageMenuFrame
+from frames.manage_restaurant_products.manage_restaurant_products import ManageRestaurantProductsFrame
 from frames.manage_orders.manage_orders import ManageOrdersFrame
 from frames.manage_deliveries.manage_deliveries import ManageDeliveriesFrame
 
@@ -45,22 +46,13 @@ class MainWindow(tk.Tk):
 
         self.frames = {}
 
-        for F in (LoginFrame, 
-                  ManageUsersFrame, 
-                  ManageRestaurantsFrame, 
-                  ManageTablesFrame, 
-                  ManagePromocodesFrame, 
-                  ManageProductsListFrame, 
-                  ManageBookingsFrame, 
-                  ManageMenuFrame,
-                  ManageOrdersFrame,
-                  ManageDeliveriesFrame
-                  ):
+        for F in (LoginFrame, ManageUsersFrame, ManageRestaurantsFrame, ManageTablesFrame, ManagePromocodesFrame, ManageProductsListFrame, ManageBookingsFrame, ManageMenuFrame, ManageRestaurantProductsFrame):
             frame = F(container, self)
             self.frames[F.__name__] = frame
             frame.grid(row = 0, column = 0, sticky = "nsew")
 
         # self.show_frame('LoginFrame') # TODO return when MainMenu is done
+        self.show_frame('ManageRestaurantProductsFrame')
         self.show_frame('ManageDeliveriesFrame')
 
     def show_frame(self, cont):

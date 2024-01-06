@@ -39,6 +39,7 @@ class Restaurant(Base):
     id = Column(Integer, primary_key=True)
     city = Column(String(50, 'utf8mb3_unicode_ci'), nullable=False)
 
+    restaurant_products = relationship("RestaurantProduct", back_populates="restaurant")
 
 class User(Base):
     __tablename__ = 'users'

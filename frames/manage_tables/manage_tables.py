@@ -41,7 +41,9 @@ class ManageTablesFrame(tk.Frame):
             get_row=self.get_row
         )
         self.table2.grid(row=2, column=1, sticky='nsew')
-
+        back_to_main_screen_button = tk.Button(self, text="Back to main", command=lambda: self.app.show_frame('MainFrame'))
+        back_to_main_screen_button.grid(row=10, column=0, sticky="sw")
+        
     def refresh(self, _ = None):
         data1, data2 = split_tables(self.restaurant_dropdown.get().get_tables())
         self.table1.update_data(data1)

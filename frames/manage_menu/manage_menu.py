@@ -36,7 +36,9 @@ class ManageMenuFrame(tk.Frame):
             get_row=self.get_row_menu_categories
         )
         self.menu_categories_table.grid(row=0, column=2, sticky='new')
-    
+        back_to_main_screen_button = tk.Button(self, text="Back to main", command=lambda: self.app.show_frame('MainFrame'))
+        back_to_main_screen_button.grid(row=10, column=0, sticky="sw")
+        
     def refresh(self):
         self.menu_items_table.update_data(self.app.hrms.menu_items)
         self.menu_categories_table.update_data(self.app.hrms.menu_categories)

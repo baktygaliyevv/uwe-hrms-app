@@ -35,6 +35,8 @@ class ManageDeliveriesFrame(tk.Frame):
             get_row=self.get_row
         )
         self.table.grid(row=1, column=0, columnspan=2, sticky='ew')
+        back_to_main_screen_button = tk.Button(self, text="Back to main", command=lambda: self.app.show_frame('MainFrame'))
+        back_to_main_screen_button.grid(row=10, column=0, sticky="sw")
 
     def get_deliveries(self):
         deliveries = self.restaurant_dropdown.get().get_deliveries()

@@ -22,7 +22,9 @@ class ManageUsersFrame(tk.Frame):
             get_row=self.get_row
         )
         self.table.grid(row=1, column=0, columnspan=2, sticky='ew')
-
+        back_to_main_screen_button = tk.Button(self, text="Back to main", command=lambda: self.app.show_frame('MainFrame'))
+        back_to_main_screen_button.grid(row=10, column=0, sticky="sw")
+        
     def get_row(self, table, row, user):
         tk.Label(table, text=f"{user.first_name} {user.last_name}", anchor='w', font=self.app.base_font).grid(row=row, column=0, sticky='ew')
         tk.Label(table, text=user.phone, anchor='w', font=self.app.base_font).grid(row=row, column=1, sticky='ew')

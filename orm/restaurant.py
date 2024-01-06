@@ -1,6 +1,7 @@
 from orm.db import session
 from orm.entities.entities import Restaurant as RestaurantEntity
 from orm.table import Table
+from orm.restaurant_product import RestaurantProduct
 
 class Restaurant:
     '''Pass either restaurant_entity to create a Restaurant from RestaurantEntity or all other parameters to create an entirely new Restaurant'''
@@ -35,3 +36,21 @@ class Restaurant:
     def delete_table(self, table: Table):
         table.delete() 
         self.__hrms.__tables__.remove(table)
+
+    def get_products(self):
+        """Return a list of product dictionaries with id, name, and count."""
+        return [
+            {
+                'id': rp.product_id,
+                'name': rp.product.name,
+                'count': rp.count
+            }
+            for rp in self.restaurant_products
+        ]
+    
+    def get_unavailable_items(self):
+        """Return a list of unavailable items with reasons."""
+        return [
+            {'name': rp.product.name, 'reason': 'Out of stock'}
+            for rp in self.restaurant_products if rp.count == 0
+        ]

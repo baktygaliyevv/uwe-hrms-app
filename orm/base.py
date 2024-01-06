@@ -99,16 +99,6 @@ class HRMS:
         menu_item.delete()
         self.menu_items.remove(menu_item)
 
-    def get_products_for_restaurant(self, restaurant_id):
-        restaurant = self.get_restaurant(id=restaurant_id)
-        if restaurant:
-            return restaurant.products
-        return []
-
-    def get_unavailable_items(self, restaurant_id):
-        # will do it later
-        return []
-
     def update_product_count(self, product_id, new_count):
         product = self.get_product(product_id)
         if product:

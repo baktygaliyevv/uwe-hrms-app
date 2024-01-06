@@ -8,16 +8,15 @@ class ManageRestaurantProductsFrame(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.app = app
 
-        self.grid_columnconfigure(1, weight=1)
-        self.grid_rowconfigure(1, weight=1)
+        self.grid_columnconfigure(tuple(range(2)), weight=1)
 
         title_frame = tk.Frame(self)
-        tk.Label(title_frame, text="Manage Storage at ", font=self.app.title_font).grid(row=0, column=0, sticky="w")
+        tk.Label(title_frame, text="Storage at ", font=self.app.title_font).grid(row=0, column=0, sticky="w")
 
         self.restaurant_selector = RestaurantSelectorComponent(title_frame, app)
         self.restaurant_selector.bind('<<RestaurantSelected>>', self.on_restaurant_selected) 
         self.restaurant_selector.grid(row=0, column=1, sticky='ew')
-        title_frame.grid(row=0, columnspan=2, sticky='ew')
+        title_frame.grid(row=0, column=0, columnspan=2, sticky='ew')
 
         self.product_count_table = TableComponent(
             self, 
@@ -43,10 +42,10 @@ class ManageRestaurantProductsFrame(tk.Frame):
         count_label.grid(row=row, column=1, sticky='ew')
  
         actions_frame = tk.Frame(table)
-        increment_button = tk.Button(actions_frame, text='+', command=lambda: self.increment_count(product, count_label))
+        increment_button = tk.Button(actions_frame, text='+', command=lambda product=product, count_label=count_label: self.increment_count(product, count_label))
         increment_button.grid(row=0, column=0, sticky='ew')
         
-        decrement_button = tk.Button(actions_frame, text='-', command=lambda: self.decrement_count(product, count_label))
+        decrement_button = tk.Button(actions_frame, text='-', command=lambda product=product, count_label=count_label: self.decrement_count(product, count_label))
         decrement_button.grid(row=0, column=1, sticky='ew')
         decrement_button['state'] = 'normal' if product['count'] > 0 else 'disabled'
         

@@ -98,12 +98,3 @@ class HRMS:
     def delete_menu_item(self, menu_item):
         menu_item.delete()
         self.menu_items.remove(menu_item)
-
-    def update_product_count(self, product_id, new_count):
-        product = self.get_product(product_id)
-        if product:
-            product.count = new_count
-            session.add(product)
-            session.commit()
-        else:
-            raise ValueError("Product not found")

@@ -1,7 +1,6 @@
 from orm.db import session
 from orm.entities.entities import Restaurant as RestaurantEntity, RestaurantProduct as RestaurantProductEntity
 from orm.table import Table
-from orm.restaurant_product import RestaurantProduct
 
 class Restaurant:
     '''Pass either restaurant_entity to create a Restaurant from RestaurantEntity or all other parameters to create an entirely new Restaurant'''
@@ -19,10 +18,7 @@ class Restaurant:
         
         self.id = self.__entity.id
         self.city = self.__entity.city
-        self.restaurant_products = [
-            RestaurantProduct(hrms, restaurant_product_entity=rp) 
-            for rp in self.__entity.restaurant_products
-        ]
+
     def delete(self):
         session.delete(self.__entity)
         session.commit()
@@ -41,19 +37,43 @@ class Restaurant:
         self.__hrms.__tables__.remove(table)
 
     def get_products(self):
-        """Return a list of product dictionaries with id, name, and count."""
-        return [
-            {
-                'id': rp.product_id,
-                'name': rp.product.name,
-                'count': rp.count
-            }
-            for rp in self.restaurant_products
-        ]
+        """Return a list of tuples with product id and count."""
+        return [(rp.product_id, rp.count) for rp in self.__entity.restaurant_products]
     
     def get_unavailable_items(self):
         """Return a list of unavailable items with reasons."""
         return [
-            {'name': rp.product.name, 'reason': 'Out of stock'}
-            for rp in self.restaurant_products if rp.count == 0
+            (rp.product, 'Out of stock')
+            for rp in self.__entity.restaurant_products if rp.count == 0
         ]
+    
+    def add_product(self, product, count):
+        """Add a product to the restaurant."""
+        restaurant_product = session.query(RestaurantProductEntity).filter_by(restaurant_id=self.id, product_id=product.id).first()
+        if restaurant_product:
+            restaurant_product.count += count
+        else:
+            restaurant_product = RestaurantProductEntity(
+                product_id=product.id,
+                restaurant_id=self.id,
+                count=count
+            )
+            session.add(restaurant_product)
+        session.commit()
+
+    def remove_product(self, product):
+        """Remove a product from the restaurant."""
+        restaurant_product = session.query(RestaurantProductEntity).filter_by(restaurant_id=self.id, product_id=product.id).first()
+        if restaurant_product:
+            session.delete(restaurant_product)
+            session.commit()
+
+    def update_product_count(self, product, new_count):
+        """Update the count of a specific product in the restaurant."""
+        restaurant_product = session.query(RestaurantProductEntity).filter_by(restaurant_id=self.id, product_id=product.id).first()
+        if restaurant_product:
+            restaurant_product.count = new_count
+            session.commit()
+        else:
+            raise ValueError("Product not found in this restaurant")
+        

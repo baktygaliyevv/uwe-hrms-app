@@ -45,10 +45,9 @@ class ManageRestaurantProductsFrame(tk.Frame):
         increment_button = tk.Button(actions_frame, text='+', command=lambda product=product, count_label=count_label: self.increment_count(product, count_label))
         increment_button.grid(row=0, column=0, sticky='ew')
         
-        decrement_button = tk.Button(actions_frame, text='-', command=lambda product=product, count_label=count_label: self.decrement_count(product, count_label))
+        decrement_button = tk.Button(actions_frame, text='-', command=lambda: self.decrement_count(product, count_label), state='normal' if product['count'] > 0 else 'disabled')
         decrement_button.grid(row=0, column=1, sticky='ew')
-        decrement_button['state'] = 'normal' if product['count'] > 0 else 'disabled'
-        
+    
         actions_frame.grid(row=row, column=2, sticky='ew')
 
     def get_unavailable_items_row(self, table, row, item):
@@ -65,15 +64,14 @@ class ManageRestaurantProductsFrame(tk.Frame):
             self.unavailable_items_table.update_data(restaurant.get_unavailable_items())
 
     def increment_count(self, product, count_label):
-        new_count = product['count'] + 1
-        self.app.hrms.update_product_count(product['id'], new_count)
-        product['count'] = new_count 
-        count_label.config(text=str(new_count)) 
+        product.increment_count()
+        count_label.config(text=str(product['count']))
 
     def decrement_count(self, product, count_label, event):
-        new_count = max(product['count'] - 1, 0)
-        self.app.hrms.update_product_count(product['id'], new_count)
-        product['count'] = new_count  
-        count_label.config(text=str(new_count))  
-        if new_count == 0:
-            event.widget['state'] = 'disabled'
+        try:
+            product.decrement_count()
+            count_label.config(text=str(product['count']))
+            if product['count'] == 0:
+                event.widget['state'] = 'disabled'
+        except ValueError as e:
+            messagebox.showerror("Error", str(e))

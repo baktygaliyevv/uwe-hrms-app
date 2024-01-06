@@ -41,9 +41,9 @@ class HRMS:
 
     def get_user(self, id = None, phone = None):
         if id:
-            return next(user for user in self.users if user.id == id)
+            return next((user for user in self.users if user.id == id), None)
         if phone:
-            return next(user for user in self.users if user.phone == phone)
+            return next((user for user in self.users if user.phone == phone), None)
 
     def add_user(self, user: User):
         self.users.append(user)

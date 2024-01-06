@@ -23,6 +23,11 @@ from frames.manage_menu.manage_menu import ManageMenuFrame
 from frames.manage_orders.manage_orders import ManageOrdersFrame
 from frames.manage_deliveries.manage_deliveries import ManageDeliveriesFrame
 
+from frames.dashboards.dashboard_manager import DashboardManagerFrame
+from frames.dashboards.dashboard_chef import DashboardChefFrame
+from frames.dashboards.dashboard_staff import DashboardStaffFrame
+from frames.dashboards.dashboard_courier import DashboardCourierFrame
+
 class MainWindow(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
@@ -43,7 +48,7 @@ class MainWindow(tk.Tk):
         self.hrms = HRMS()
         self.user = None
 
-        self.frames = {}
+        self.__frames = {}
 
         for F in (LoginFrame, 
                   ManageUsersFrame, 
@@ -54,18 +59,23 @@ class MainWindow(tk.Tk):
                   ManageBookingsFrame, 
                   ManageMenuFrame,
                   ManageOrdersFrame,
-                  ManageDeliveriesFrame
+                  ManageDeliveriesFrame,
+                  DashboardManagerFrame,
+                  DashboardChefFrame,
+                  DashboardStaffFrame,
+                  DashboardCourierFrame
                   ):
             frame = F(container, self)
-            self.frames[F.__name__] = frame
+            self.__frames[F.__name__] = frame
             frame.grid(row = 0, column = 0, sticky = "nsew")
 
-        # self.show_frame('LoginFrame') # TODO return when MainMenu is done
-        self.show_frame('ManageDeliveriesFrame')
+        self.show_frame('LoginFrame')
 
     def show_frame(self, cont):
-        frame = self.frames[cont]    
+        frame = self.__frames[cont]    
         frame.tkraise()
+        if getattr(frame, 'render', None) and callable(frame.render):
+            frame.render()
     
 app = MainWindow()
 app.mainloop()

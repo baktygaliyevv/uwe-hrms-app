@@ -33,6 +33,23 @@ class LoginFrame(tk.Frame):
         if not user or not user.check_password(password):
             return messagebox.showerror("Login Failed", "Incorrect phone number or password.")
 
-        self.app.user = user  
+        self.app.user = user
 
-        # self.app.show_frame('MainFrame')
+        if user.role == 'admin':
+            return self.app.show_frame('MainFrame')
+        
+        if user.role == 'manager':
+            return self.app.show_frame('DashboardManagerFrame')
+
+        if user.role == 'chef':
+            return self.app.show_frame('DashboardChefFrame')
+        
+        if user.role == 'staff':
+            return self.app.show_frame('DashboardStaffFrame')
+        
+        if user.role == 'courier':
+            return self.app.show_frame('DashboardCourierFrame')
+        
+        if user.role == 'client':
+            self.app.user = None
+            return messagebox.showerror('Not allowed!', 'Clients not allowed to log into HRMS Staff System. Please use web interface at https://example.com')

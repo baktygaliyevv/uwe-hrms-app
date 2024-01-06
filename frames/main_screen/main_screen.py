@@ -1,13 +1,3 @@
-import sys
-from pathlib import Path
-sys.path.append(str(Path(__file__).resolve()))
-
-from dotenv import load_dotenv
-load_dotenv()
-
-from orm.db import init_db
-init_db()
-
 import tkinter as tk
 
 class MainFrame(tk.Frame):
@@ -15,9 +5,10 @@ class MainFrame(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.app = app
 
+    def render(self):
         manage_booking_button = tk.Button(self, text='Booking management', command=lambda: self.app.show_frame('ManageBookingsFrame'))
         manage_booking_button.pack(side='top', anchor="nw", padx=10, pady=10)
-
+        
         manage_delivery_button = tk.Button(self, text='Delivery management', command=lambda: self.app.show_frame('ManageDeliveriesFrame'))
         manage_delivery_button.pack(side='top', anchor="nw", padx=10, pady=10)
 
@@ -40,6 +31,5 @@ class MainFrame(tk.Frame):
         manage_table_button.pack(side='top', anchor="nw", padx=10, pady=10)
 
         manage_user_button = tk.Button(self, text="User Management", command=lambda: self.app.show_frame('ManageUsersFrame'))
-        manage_user_button.pack(side='top', anchor="nw", padx=10, pady=10)
-
-        
+        manage_user_button.pack(side='top', anchor="nw", padx=10, pady=10)    
+   

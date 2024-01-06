@@ -74,7 +74,6 @@ class User:
 
     def get_bookings(self):
         return list(filter(lambda b, user=self: b.get_user() == user, self.__hrms.__bookings__))
-
     def add_booking(self, booking: Booking):
         self.__hrms.__bookings__.append(booking)
 

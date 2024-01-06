@@ -11,7 +11,7 @@ init_db()
 import tkinter as tk
 import tkinter.font as font
 from orm.base import HRMS
-from main_screen import MainFrame
+from frames.main_screen.main_screen import MainFrame
 from frames.login.login import LoginFrame
 from frames.manage_users.manage_users import ManageUsersFrame
 from frames.manage_restaurants.manage_restaurants import ManageRestaurantsFrame
@@ -43,7 +43,7 @@ class MainWindow(tk.Tk):
         self.hrms = HRMS()
         self.user = None
 
-        self.frames = {}
+        self.__frames = {}
 
         for F in (MainFrame,
                   LoginFrame, 
@@ -58,15 +58,17 @@ class MainWindow(tk.Tk):
                   ManageDeliveriesFrame
                   ):
             frame = F(container, self)
-            self.frames[F.__name__] = frame
+            self.__frames[F.__name__] = frame
             frame.grid(row = 0, column = 0, sticky = "nsew")
 
         # self.show_frame('LoginFrame') # TODO return when MainMenu is done
-        self.show_frame('MainFrame')
+        #MainFrame
+        self.show_frame('LoginFrame')
 
     def show_frame(self, cont):
-        frame = self.frames[cont]    
+        frame = self.__frames[cont]    
         frame.tkraise()
-    
+        if getattr(frame, 'render', None) and callable(frame.render):
+            frame.render()
 app = MainWindow()
 app.mainloop()

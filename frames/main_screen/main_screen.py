@@ -32,4 +32,38 @@ class MainFrame(tk.Frame):
 
         manage_user_button = tk.Button(self, text="User Management", command=lambda: self.app.show_frame('ManageUsersFrame'))
         manage_user_button.pack(side='top', anchor="nw", padx=10, pady=10)    
-   
+        # нужно добавить rest_prod(manager, chef)
+        if self.app.user.role == 'manager':
+            manage_menu_button.config(state='disabled')
+            manage_products_button.config(state='disabled')
+            manage_rest_button.config(state='disabled')
+            manage_user_button.config(state='disabled')
+
+        elif self.app.user.role == 'chef':
+            manage_booking_button.config(state='disabled')
+            manage_menu_button.config(state='disabled')
+            manage_products_button.config(state='disabled')
+            manage_promo_button.config(state='disabled')
+            manage_rest_button.config(state='disabled')
+            manage_table_button.config(state='disabled')
+            manage_user_button.config(state='disabled')
+
+        elif self.app.user.role == 'staff':
+            manage_booking_button.config(state='disabled')
+            manage_delivery_button.config(state='disabled')
+            manage_menu_button.config(state='disabled')
+            manage_products_button.config(state='disabled')
+            manage_promo_button.config(state='disabled')
+            manage_rest_button.config(state='disabled')
+            manage_table_button.config(state='disabled')
+            manage_user_button.config(state='disabled')
+        
+        elif self.app.user.role == 'courier':
+            manage_booking_button.config(state='disabled')
+            manage_menu_button.config(state='disabled')
+            manage_orders_button.config(state='disabled')
+            manage_products_button.config(state='disabled')
+            manage_promo_button.config(state='disabled')
+            manage_rest_button.config(state='disabled')
+            manage_table_button.config(state='disabled')
+            manage_user_button.config(state='disabled')

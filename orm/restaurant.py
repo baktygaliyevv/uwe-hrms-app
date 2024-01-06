@@ -76,4 +76,20 @@ class Restaurant:
             session.commit()
         else:
             raise ValueError("Product not found in this restaurant")
-        
+
+    def get_orders(self):
+        orders = []
+        for table in self.get_tables():
+            orders.extend(table.get_orders())
+        return orders
+    
+    def get_deliveries(self):
+        return list(filter(lambda d, restaurant=self: d.get_restaurant() == restaurant, self.__hrms.__deliveries__))
+    
+    def add_delivery(self, delivery):
+        self.__hrms.__deliveries__.append(delivery)
+
+    def delete_delivery(self, delivery):
+        delivery.delete()
+        self.__hrms.__deliveries__.remove(delivery)
+

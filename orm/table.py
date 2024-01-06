@@ -38,3 +38,12 @@ class Table:
         booking.delete() 
         self.__hrms.__bookings__.remove(booking)
 
+    def get_orders(self):
+        return list(filter(lambda o, table=self: o.get_table() == table, self.__hrms.__orders__))
+    
+    def add_order(self, order):
+        self.__hrms.__orders__.append(order)
+
+    def delete_order(self, order):
+        order.delete()
+        self.__hrms.__orders__.remove(order)

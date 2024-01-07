@@ -1,0 +1,22 @@
+|   Phone    |  Password |   Role   |
+|------------|-----------|----------|
+| 7069630149 |  qwerty   |  admin   |
+| 7863355965 |  qwerty   | manager  |
+| 7982926531 |  qwerty   | manager  |
+| 7932020736 |  qwerty   |   chef   |
+| 7948180541 |  qwerty   |   chef   |
+| 7739262610 |  qwerty   |   chef   |
+| 7937454977 |  qwerty   |  staff   |
+| 7905705143 |  qwerty   |  staff   |
+| 7048337256 |  qwerty   |  staff   |
+| 7843879435 |  qwerty   |  staff   |
+| 7848009307 |  qwerty   |  staff   |
+| 7837110365 |  qwerty   | courier  |
+| 7956438600 |  qwerty   | courier  |
+| 7043491854 |  qwerty   |  client  |
+| 7934362105 |  qwerty   |  client  |
+| 7786501818 |  qwerty   |  client  |
+| 7774151886 |  qwerty   |  client  |
+| 7713318333 |  qwerty   |  client  |
+| 7821175896 |  qwerty   |  client  |
+| 7874832350 |  qwerty   |  client  |

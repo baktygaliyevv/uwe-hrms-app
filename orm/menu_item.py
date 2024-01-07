@@ -26,6 +26,11 @@ class MenuItem:
     def get_menu_category(self):
         return self.__hrms.get_menu_category(self.__menu_category_id)
     
+    def set_menu_category(self, menu_category):
+        self.__menu_category_id = menu_category.id
+        self.__entity.menu_category_id = menu_category.id
+        session.commit()
+    
     def get_products(self):
         stmt = select([t_menu_products.c.product_id]).where(t_menu_products.c.menu_id == self.id)
         result = session.execute(stmt)

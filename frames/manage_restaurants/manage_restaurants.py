@@ -33,7 +33,9 @@ class ManageRestaurantsFrame(tk.Frame):
                 get_row=self.get_row
             )
             self.table2.grid(row=1, column=1, sticky='ew')
-
+        back_to_main_screen_button = tk.Button(self, text="Back to main", command=lambda: self.app.show_frame('MainFrame'))
+        back_to_main_screen_button.grid(row=10, column=0, sticky="sw")
+        
     def get_row(self, table, row, restaurant):
         tk.Label(table, text=restaurant.city, anchor='w', font=self.app.base_font).grid(row=row, column=0, sticky='ew')
         tk.Button(table, text='✖', command=lambda restaurant=restaurant: self.delete_restaurant(restaurant)).grid(row=row, column=1, sticky='ew')

@@ -33,6 +33,5 @@ class LoginFrame(tk.Frame):
         if not user or not user.check_password(password):
             return messagebox.showerror("Login Failed", "Incorrect phone number or password.")
 
-        self.app.user = user  
-
-        # self.app.show_frame('MainFrame')
+        self.app.user = user
+        return self.app.show_frame('MainFrame')

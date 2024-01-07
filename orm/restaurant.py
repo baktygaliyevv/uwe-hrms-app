@@ -83,6 +83,12 @@ class Restaurant:
             orders.extend(table.get_orders())
         return orders
     
+    def get_bookings(self):
+        bookings = []
+        for table in self.get_tables():
+            bookings.extend(table.get_bookings())
+        return bookings
+    
     def get_deliveries(self):
         return list(filter(lambda d, restaurant=self: d.get_restaurant() == restaurant, self.__hrms.__deliveries__))
     

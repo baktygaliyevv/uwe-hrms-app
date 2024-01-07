@@ -1,5 +1,13 @@
 import tkinter as tk
 
+DASHBOARDS = {
+    'admin': 'MainFrame',
+    'manager': 'DashboardManagerFrame',
+    'chef': 'DashboardChefFrame',
+    'staff': 'DashboardStaffFrame',
+    'courier': 'DashboardCourierFrame' 
+}
+
 class MainFrame(tk.Frame):
     def __init__(self, parent, app):
         tk.Frame.__init__(self, parent)
@@ -8,6 +16,7 @@ class MainFrame(tk.Frame):
 
     def render(self):
         self.buttons = [
+            tk.Button(self, text='Dashboard', command=lambda: self.goto(self.get_dashboard())),
             tk.Button(self, text='Booking management', command=lambda: self.goto('ManageBookingsFrame'), state=self.get_state('ManageBookingsFrame')),
             tk.Button(self, text='Delivery management', command=lambda: self.goto('ManageDeliveriesFrame'), state=self.get_state('ManageDeliveriesFrame')),
             tk.Button(self, text='Menu management', command=lambda: self.goto('ManageMenuFrame'), state=self.get_state('ManageMenuFrame')),
@@ -35,3 +44,6 @@ class MainFrame(tk.Frame):
 
     def get_state(self, frame):
         return 'normal' if self.app.is_allowed(frame, self.app.user.role) else 'disabled'
+    
+    def get_dashboard(self):
+        return DASHBOARDS[self.app.user.role]

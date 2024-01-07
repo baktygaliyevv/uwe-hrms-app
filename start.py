@@ -24,12 +24,17 @@ from frames.manage_restaurant_products.manage_restaurant_products import ManageR
 from frames.manage_orders.manage_orders import ManageOrdersFrame
 from frames.manage_deliveries.manage_deliveries import ManageDeliveriesFrame
 
+from frames.dashboards.dashboard_chef import DashboardChefFrame
+from frames.dashboards.dashboard_manager import DashboardManagerFrame
+from frames.dashboards.dashboard_staff import DashboardStaffFrame
+from frames.dashboards.dashboard_courier import DashboardCourierFrame
+
 class MainWindow(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
 
         container = tk.Frame(self)
-        tk.Tk.geometry(self, '800x600')
+        tk.Tk.geometry(self, '950x600')
         container.pack(side='top', fill='both', expand = True)     
         container.grid_rowconfigure(0, weight = 1)
         container.grid_columnconfigure(0, weight = 1)
@@ -57,7 +62,11 @@ class MainWindow(tk.Tk):
                   ManageMenuFrame,
                   ManageOrdersFrame,
                   ManageDeliveriesFrame,
-                  ManageRestaurantProductsFrame
+                  ManageRestaurantProductsFrame,
+                  DashboardChefFrame,
+                  DashboardManagerFrame,
+                  DashboardStaffFrame,
+                  DashboardCourierFrame
                   ):
             frame = F(container, self)
             self.__frames[F.__name__] = frame

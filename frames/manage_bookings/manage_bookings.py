@@ -14,7 +14,7 @@ def get_tables_bookings(tables):
 class ManageBookingsFrame(tk.Frame):
     __allowed_roles__ = ['admin', 'manager']
 
-    def __init__(self, parent, app):
+    def __init__(self, parent, app, show_back = True):
         tk.Frame.__init__(self, parent)
         self.app = app
 
@@ -36,8 +36,9 @@ class ManageBookingsFrame(tk.Frame):
             get_row=self.get_row
         )
         self.table.grid(row=1, column=0, columnspan=2, sticky='ew')
-        back_to_main_screen_button = tk.Button(self, text="Back to main", command=lambda: self.app.show_frame('MainFrame'))
-        back_to_main_screen_button.grid(row=10, column=0, sticky="sw")
+
+        if show_back:
+            tk.Button(self, text="Back to main", command=lambda: self.app.show_frame('MainFrame')).grid(row=10, column=0, sticky="sw")
         
     def refresh(self, _ = None):
         self.table.update_data(get_tables_bookings(self.restaurant_dropdown.get().get_tables()))

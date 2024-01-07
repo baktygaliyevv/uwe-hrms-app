@@ -49,7 +49,7 @@ class ManageRestaurantProductsFrame(tk.Frame):
         increment_button = tk.Button(
             actions_frame,
             text='+',
-            command=lambda product_count=product_count, count_label=count_label: self.increment_count(product_count, count_label)
+            command=lambda product_count=product_count: self.increment_count(product_count)
         )
         increment_button.grid(row=0, column=0, sticky='ew')
         
@@ -59,8 +59,7 @@ class ManageRestaurantProductsFrame(tk.Frame):
             state='normal' if count > 0 else 'disabled'
         )
         decrement_button.config(
-            command=lambda decrement_button=decrement_button, product_count=product_count,
-                           count_label=count_label: self.decrement_count(decrement_button, product_count, count_label),
+            command=lambda product_count=product_count: self.decrement_count(product_count),
         )
         decrement_button.grid(row=0, column=1, sticky='ew')
     
@@ -77,17 +76,12 @@ class ManageRestaurantProductsFrame(tk.Frame):
             self.product_count_table.update_data(restaurant.get_products())
             self.unavailable_items_table.update_data(restaurant.get_unavailable_menu_items())
 
-    def increment_count(self, product_count, count_label):
+    def increment_count(self, product_count):
         product, count = product_count
         self.restaurant_selector.get().update_product_count(product, count + 1)
-        count_label.config(text=str(count + 1))
+        self.refresh()
 
-    def decrement_count(self, button, product_count, count_label):
+    def decrement_count(self, product_count):
         product, count = product_count
-        try:
-            self.restaurant_selector.get().update_product_count(product, count - 1)
-            count_label.config(text=str(count - 1))
-            if count == 0:
-                button.config(state='disabled')
-        except ValueError as e:
-            messagebox.showerror("Error", str(e))
+        self.restaurant_selector.get().update_product_count(product, count - 1)
+        self.refresh()

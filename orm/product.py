@@ -41,3 +41,17 @@ class Product:
     def delete(self):
         session.delete(self.__entity)
         session.commit()
+
+    def increment_count(self, amount=1):
+        self.count += amount
+        self.save()
+
+    def decrement_count(self, amount=1):
+        if self.count >= amount:
+            self.count -= amount
+            self.save()
+        else:
+            raise ValueError("Not enough stock to decrement.")
+
+    def save(self):
+        session.commit()

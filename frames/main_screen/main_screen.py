@@ -27,6 +27,7 @@ class MainFrame(tk.Frame):
             tk.Button(self, text='Restaurant storage management', command=lambda: self.goto('ManageRestaurantProductsFrame'), state=self.get_state('ManageRestaurantProductsFrame')),
             tk.Button(self, text="Table Management", command=lambda: self.goto('ManageTablesFrame'), state=self.get_state('ManageTablesFrame')),
             tk.Button(self, text="User Management", command=lambda: self.goto('ManageUsersFrame'), state=self.get_state('ManageUsersFrame')),
+            tk.Button(self, text="Logout", command=lambda: self.app.logout())
         ]
 
         r = 0

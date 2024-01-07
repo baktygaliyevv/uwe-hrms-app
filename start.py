@@ -86,5 +86,9 @@ class MainWindow(tk.Tk):
             return True
         return role in frame.__allowed_roles__
 
+    def logout(self):
+        self.user = None
+        self.show_frame('LoginFrame')
+
 app = MainWindow()
 app.mainloop()

@@ -5,6 +5,8 @@ from frames.manage_menu.popups.add_edit_menu_item import AddEditMenuItemPopup
 from frames.manage_menu.popups.menu_products import MenuProductsPopup
 
 class ManageMenuFrame(tk.Frame):
+    __allowed_roles__ = ['admin']
+
     def __init__(self, parent, app):
         tk.Frame.__init__(self, parent)
         self.app = app

@@ -4,6 +4,8 @@ from components.table import TableComponent
 from frames.manage_promocodes.popups.add_edit_promocode import AddEditPromocodePopup
 
 class ManagePromocodesFrame(tk.Frame):
+    __allowed_roles__ = ['admin', 'manager']
+
     def __init__(self, parent, app):
         tk.Frame.__init__(self, parent)
         self.app = app

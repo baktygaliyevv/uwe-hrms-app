@@ -4,6 +4,8 @@ from components.table import TableComponent
 from components.restaurant_selector import RestaurantSelectorComponent
 
 class ManageRestaurantProductsFrame(tk.Frame):
+    __allowed_roles__ = ['admin', 'manager', 'chef']
+
     def __init__(self, parent, app):
         tk.Frame.__init__(self, parent)
         self.app = app

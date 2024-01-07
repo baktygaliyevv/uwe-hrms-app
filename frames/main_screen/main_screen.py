@@ -4,66 +4,34 @@ class MainFrame(tk.Frame):
     def __init__(self, parent, app):
         tk.Frame.__init__(self, parent)
         self.app = app
+        self.buttons = []
 
     def render(self):
-        manage_booking_button = tk.Button(self, text='Booking management', command=lambda: self.app.show_frame('ManageBookingsFrame'))
-        manage_booking_button.pack(side='top', anchor="nw", padx=10, pady=10)
-        
-        manage_delivery_button = tk.Button(self, text='Delivery management', command=lambda: self.app.show_frame('ManageDeliveriesFrame'))
-        manage_delivery_button.pack(side='top', anchor="nw", padx=10, pady=10)
+        self.buttons = [
+            tk.Button(self, text='Booking management', command=lambda: self.goto('ManageBookingsFrame'), state=self.get_state('ManageBookingsFrame')),
+            tk.Button(self, text='Delivery management', command=lambda: self.goto('ManageDeliveriesFrame'), state=self.get_state('ManageDeliveriesFrame')),
+            tk.Button(self, text='Menu management', command=lambda: self.goto('ManageMenuFrame'), state=self.get_state('ManageMenuFrame')),
+            tk.Button(self, text='Orders management', command=lambda: self.goto('ManageOrdersFrame'), state=self.get_state('ManageOrdersFrame')),
+            tk.Button(self, text='Products management', command=lambda: self.goto('ManageProductsListFrame'), state=self.get_state('ManageProductsListFrame')),
+            tk.Button(self, text='Promocodes management', command=lambda: self.goto('ManagePromocodesFrame'), state=self.get_state('ManagePromocodesFrame')),
+            tk.Button(self, text="Restaurant Management", command=lambda: self.goto('ManageRestaurantsFrame'), state=self.get_state('ManageRestaurantsFrame')),
+            tk.Button(self, text="Table Management", command=lambda: self.goto('ManageTablesFrame'), state=self.get_state('ManageTablesFrame')),
+            tk.Button(self, text="User Management", command=lambda: self.goto('ManageUsersFrame'), state=self.get_state('ManageUsersFrame')),
+        ]
 
-        manage_menu_button = tk.Button(self, text='Menu management', command=lambda: self.app.show_frame('ManageMenuFrame'))
-        manage_menu_button.pack(side='top', anchor="nw", padx=10, pady=10)
+        r = 0
+        c = 0
+        for b in self.buttons:
+            if c == 4:
+                c = 0
+                r += 1
+            b.grid(row=r, column=c, sticky='nsew', padx=5, pady=5)
+            c += 1
 
-        manage_orders_button = tk.Button(self, text='Orders management', command=lambda: self.app.show_frame('ManageOrdersFrame'))
-        manage_orders_button.pack(side='top', anchor="nw", padx=10, pady=10)
+    def goto(self, frame):
+        self.app.show_frame(frame)
+        for button in self.buttons:
+            button.grid_forget()
 
-        manage_products_button = tk.Button(self, text='Products management', command=lambda: self.app.show_frame('ManageProductsListFrame'))
-        manage_products_button.pack(side='top', anchor="nw", padx=10, pady=10)
-        
-        manage_promo_button = tk.Button(self, text='Promocodes management', command=lambda: self.app.show_frame('ManagePromocodesFrame'))
-        manage_promo_button.pack(side='top', anchor="nw", padx=10, pady=10)
-        
-        manage_rest_button = tk.Button(self, text="Restaurant Management", command=lambda: self.app.show_frame('ManageRestaurantsFrame'))
-        manage_rest_button.pack(side='top', anchor="nw", padx=10, pady=10)
-       
-        manage_table_button = tk.Button(self, text="Table Management", command=lambda: self.app.show_frame('ManageTablesFrame'))
-        manage_table_button.pack(side='top', anchor="nw", padx=10, pady=10)
-
-        manage_user_button = tk.Button(self, text="User Management", command=lambda: self.app.show_frame('ManageUsersFrame'))
-        manage_user_button.pack(side='top', anchor="nw", padx=10, pady=10)    
-        # нужно добавить rest_prod(manager, chef)
-        if self.app.user.role == 'manager':
-            manage_menu_button.config(state='disabled')
-            manage_products_button.config(state='disabled')
-            manage_rest_button.config(state='disabled')
-            manage_user_button.config(state='disabled')
-
-        elif self.app.user.role == 'chef':
-            manage_booking_button.config(state='disabled')
-            manage_menu_button.config(state='disabled')
-            manage_products_button.config(state='disabled')
-            manage_promo_button.config(state='disabled')
-            manage_rest_button.config(state='disabled')
-            manage_table_button.config(state='disabled')
-            manage_user_button.config(state='disabled')
-
-        elif self.app.user.role == 'staff':
-            manage_booking_button.config(state='disabled')
-            manage_delivery_button.config(state='disabled')
-            manage_menu_button.config(state='disabled')
-            manage_products_button.config(state='disabled')
-            manage_promo_button.config(state='disabled')
-            manage_rest_button.config(state='disabled')
-            manage_table_button.config(state='disabled')
-            manage_user_button.config(state='disabled')
-        
-        elif self.app.user.role == 'courier':
-            manage_booking_button.config(state='disabled')
-            manage_menu_button.config(state='disabled')
-            manage_orders_button.config(state='disabled')
-            manage_products_button.config(state='disabled')
-            manage_promo_button.config(state='disabled')
-            manage_rest_button.config(state='disabled')
-            manage_table_button.config(state='disabled')
-            manage_user_button.config(state='disabled')
+    def get_state(self, frame):
+        return 'normal' if self.app.is_allowed(frame, self.app.user.role) else 'disabled'

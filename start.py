@@ -70,5 +70,12 @@ class MainWindow(tk.Tk):
         frame.tkraise()
         if getattr(frame, 'render', None) and callable(frame.render):
             frame.render()
+
+    def is_allowed(self, cont, role):
+        frame = self.__frames[cont]
+        if not frame.__allowed_roles__:
+            return True
+        return role in frame.__allowed_roles__
+
 app = MainWindow()
 app.mainloop()

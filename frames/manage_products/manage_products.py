@@ -3,6 +3,8 @@ from components.table import TableComponent
 from frames.manage_products.popups.add_edit_products import AddEditProductPopup
 
 class ManageProductsListFrame(tk.Frame):
+    __allowed_roles__ = ['admin']
+
     def __init__(self, parent, app):
         tk.Frame.__init__(self, parent)
         self.app = app

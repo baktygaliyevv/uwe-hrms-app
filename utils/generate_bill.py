@@ -42,6 +42,6 @@ def generate_bill(order: Order):
     c.drawString(100, y_position - 40, f'Total: {total}£ ' + f' ({promocode.id} applied)' if promocode else '')
 
     c.save()
-    os.system(f"open '{file_path}'")
+    os.system(file_path)
 
     return True

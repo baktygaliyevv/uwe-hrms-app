@@ -38,14 +38,24 @@ class Restaurant:
 
     def get_products(self):
         """Return a list of tuples with product id and count."""
-        return [(rp.product_id, rp.count) for rp in self.__entity.restaurant_products]
+        return list(map(
+            lambda p: (p, next((rp.count for rp in self.__entity.restaurant_products if rp.product_id == p.id), 0)),
+            self.__hrms.products
+        ))
     
-    def get_unavailable_items(self):
+    def get_unavailable_menu_items(self):
         """Return a list of unavailable items with reasons."""
-        return [
-            (rp.product, 'Out of stock')
-            for rp in self.__entity.restaurant_products if rp.count == 0
-        ]
+        unavailable_products = [product for product, count in self.get_products() if count == 0]
+        unavailable_menu_items = dict()
+        for item in self.__hrms.menu_items:
+            menu_products = item.get_products()
+            for product in menu_products:
+                if product in unavailable_products:
+                    if item in unavailable_menu_items:
+                        unavailable_menu_items[item].append(product)
+                    else:
+                        unavailable_menu_items[item] = [product]
+        return [(k, v) for k, v in unavailable_menu_items.items()]
     
     def add_product(self, product, count):
         """Add a product to the restaurant."""
@@ -69,13 +79,15 @@ class Restaurant:
             session.commit()
 
     def update_product_count(self, product, new_count):
-        """Update the count of a specific product in the restaurant."""
         restaurant_product = session.query(RestaurantProductEntity).filter_by(restaurant_id=self.id, product_id=product.id).first()
+
         if restaurant_product:
             restaurant_product.count = new_count
             session.commit()
         else:
-            raise ValueError("Product not found in this restaurant")
+            new_restaurant_product = RestaurantProductEntity(restaurant_id=self.id, product_id=product.id, count=new_count)
+            session.add(new_restaurant_product)
+            session.commit()
 
     def get_orders(self):
         orders = []

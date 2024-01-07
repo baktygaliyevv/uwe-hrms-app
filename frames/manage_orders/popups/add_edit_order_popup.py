@@ -72,7 +72,7 @@ class AddEditOrderPopup(tk.Toplevel):
         self.wait_window(popup)
 
     def add_menu_item(self):
-        popup = AddOrderMenuItemPopup(self)
+        popup = AddOrderMenuItemPopup(self, self.restaurant)
         self.wait_window(popup)
         self.table.update_data(self.menu_items)
 
@@ -95,8 +95,12 @@ class AddEditOrderPopup(tk.Toplevel):
                 prev_menu_item, prev_quantity = next((mi for mi in prev_menu_items if mi[0] == actual_menu_item), (None, None))
                 if not prev_menu_item:
                     self.order.add_menu_item(actual_menu_item, actual_quantity)
+                    for product in actual_menu_item.get_products():
+                        self.restaurant.update_product_count(product, self.restaurant.get_product()[1] - 1 * actual_quantity)
                 elif actual_quantity != prev_quantity:
                     self.order.set_menu_item_quantity(prev_menu_item, actual_quantity)
+                    for product in prev_menu_item.get_products():
+                        self.restaurant.update_product_count(product, self.restaurant.get_product()[1] - 1 * actual_quantity)
         else:
             table = self.restaurant.get_table(self.table_id_var.get())
             order = Order(
@@ -108,5 +112,8 @@ class AddEditOrderPopup(tk.Toplevel):
             table.add_order(order)
             for menu_item, quantity in self.menu_items:
                 order.add_menu_item(menu_item, quantity)
+                for product in menu_item.get_products():
+                    self.restaurant.update_product_count(product,
+                                                         self.restaurant.get_product()[1] - 1 * quantity)
         self.parent.refresh()
         self.destroy()

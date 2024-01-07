@@ -42,7 +42,10 @@ class Restaurant:
             lambda p: (p, next((rp.count for rp in self.__entity.restaurant_products if rp.product_id == p.id), 0)),
             self.__hrms.products
         ))
-    
+
+    def get_product(self, product_id):
+        return next(p for p in self.get_products() if p[0].id == product_id)
+
     def get_unavailable_menu_items(self):
         """Return a list of unavailable items with reasons."""
         unavailable_products = [product for product, count in self.get_products() if count == 0]

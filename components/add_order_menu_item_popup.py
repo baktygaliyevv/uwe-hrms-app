@@ -1,12 +1,13 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 
 class AddOrderMenuItemPopup(tk.Toplevel):
-    def __init__(self, parent):
+    def __init__(self, parent, restaurant):
         tk.Toplevel.__init__(self, parent)
         self.title('Add menu item to order')
         self.parent = parent
         self.app = parent.app
+        self.restaurant = restaurant
 
         self.menu_item_var = tk.StringVar()
         self.count_var = tk.IntVar()
@@ -24,5 +25,8 @@ class AddOrderMenuItemPopup(tk.Toplevel):
 
     def save(self):
         menu_item = next(mi[0] for mi in self.menu_items if mi[1] == self.menu_item_var.get())
+        unavailable_menu_items = list(map(lambda mi: mi[0], self.restaurant.get_unavailable_menu_items()))
+        if menu_item in unavailable_menu_items:
+            return messagebox.showerror('Not available', 'Selected item not available in this restaurant. Please try again later.')
         self.parent.menu_items.append((menu_item, self.count_var.get()))
         self.destroy()

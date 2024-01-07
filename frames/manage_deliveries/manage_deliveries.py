@@ -20,7 +20,7 @@ class ManageDeliveriesFrame(tk.Frame):
         title_frame = tk.Frame(self)
         tk.Label(title_frame, text="Deliveries at ", font=self.app.title_font).grid(row=0, column=0, sticky="w")
         self.restaurant_dropdown = RestaurantSelectorComponent(title_frame, app)
-        self.restaurant_dropdown.bind('<<RestaurantSelected>>', self.refresh)
+        self.restaurant_dropdown.bind('<<RestaurantSelected>>', lambda _: self.refresh())
         self.restaurant_dropdown.grid(row=0, column=1, sticky='ew')
         title_frame.grid(row=0, column=0, sticky='ew')
 

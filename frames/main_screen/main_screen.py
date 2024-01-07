@@ -24,7 +24,7 @@ class MainFrame(tk.Frame):
             tk.Button(self, text='Products management', command=lambda: self.goto('ManageProductsListFrame'), state=self.get_state('ManageProductsListFrame')),
             tk.Button(self, text='Promocodes management', command=lambda: self.goto('ManagePromocodesFrame'), state=self.get_state('ManagePromocodesFrame')),
             tk.Button(self, text="Restaurant Management", command=lambda: self.goto('ManageRestaurantsFrame'), state=self.get_state('ManageRestaurantsFrame')),
-            tk.Button(self, text='Restaurant storage management', command=lambda: self.goto('ManageRestaurantProductsFrame', state=self.get_state('ManageRestaurantProductsFrame'))),
+            tk.Button(self, text='Restaurant storage management', command=lambda: self.goto('ManageRestaurantProductsFrame'), state=self.get_state('ManageRestaurantProductsFrame')),
             tk.Button(self, text="Table Management", command=lambda: self.goto('ManageTablesFrame'), state=self.get_state('ManageTablesFrame')),
             tk.Button(self, text="User Management", command=lambda: self.goto('ManageUsersFrame'), state=self.get_state('ManageUsersFrame')),
         ]

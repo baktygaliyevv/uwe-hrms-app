@@ -35,7 +35,7 @@ class ManageRestaurantProductsFrame(tk.Frame):
             get_row=self.get_unavailable_items_row
         )
         self.unavailable_items_table.grid(row=1, column=1, sticky='nsew')
-
+        tk.Button(self, text="Back to main", command=lambda: self.app.show_frame('MainFrame')).grid(row=10, column=0, sticky="sw")
         self.refresh() 
 
     def get_product_count_row(self, table, row, product_count):

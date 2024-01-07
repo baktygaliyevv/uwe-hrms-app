@@ -7,6 +7,8 @@ from constants.constants import ROLE_OPTIONS
 from components.table import TableComponent
 
 class ManageUsersFrame(tk.Frame):
+    __allowed_roles__ = ['admin']
+
     def __init__(self, parent, app):
         tk.Frame.__init__(self, parent)
         self.app = app

@@ -12,6 +12,8 @@ def get_tables_bookings(tables):
     return bookings
 
 class ManageBookingsFrame(tk.Frame):
+    __allowed_roles__ = ['admin', 'manager']
+
     def __init__(self, parent, app):
         tk.Frame.__init__(self, parent)
         self.app = app

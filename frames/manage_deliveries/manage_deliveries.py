@@ -9,6 +9,8 @@ from components.promocode_info_popup import PromocodeInfoPopup
 from constants.constants import DELIVERY_STATUS_OPTIONS
 
 class ManageDeliveriesFrame(tk.Frame):
+    __allowed_roles__ = ['admin', 'chef', 'courier', 'manager']
+
     def __init__(self, parent, app):
         tk.Frame.__init__(self, parent)
         self.app = app

@@ -8,6 +8,8 @@ from components.promocode_info_popup import PromocodeInfoPopup
 from utils.generate_bill import generate_bill
 
 class ManageOrdersFrame(tk.Frame):
+    __allowed_roles__ = ['admin', 'chef', 'staff', 'manager']
+
     def __init__(self, parent, app):
         tk.Frame.__init__(self, parent)
         self.app = app

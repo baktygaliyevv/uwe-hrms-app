@@ -9,6 +9,8 @@ def split_restaurants(restaurants):
     return restaurants, [] 
 
 class ManageRestaurantsFrame(tk.Frame):
+    __allowed_roles__ = ['admin']
+
     def __init__(self, parent, app):
         tk.Frame.__init__(self, parent)
         self.app = app

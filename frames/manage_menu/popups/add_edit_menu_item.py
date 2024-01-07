@@ -60,7 +60,7 @@ class AddEditMenuItemPopup(tk.Toplevel):
     def get_categories_names(self):
         self.categories = list(map(lambda c: (c, c.name), self.app.hrms.menu_categories))
         return list(map(lambda c: c[1], self.categories))
-    
+
     def refresh(self):
         self.parent.refresh()
         self.category_combobox.config(values=self.get_categories_names())
@@ -68,10 +68,19 @@ class AddEditMenuItemPopup(tk.Toplevel):
     def add_category(self):
         popup = AddMenuCategoryPopup(self)
         self.wait_window(popup)
-    
+
     def save(self):
         if self.menu_item:
-            return # TODO
+            if self.category_var.get() != self.menu_item.get_menu_category().name:
+                self.menu_item.set_menu_category(next(category[0] for category in self.categories if category[1] == self.category_var.get()))
+            if self.price_var.get() != self.menu_item.price:
+                self.menu_item.set_price(self.price_var.get())
+
+            prev_prods = self.menu_item.get_products()
+            for selected_prod in [self.products_listbox.get(idx) for idx in self.products_listbox.curselection()]:
+                selected_prod_instance = next(p[0] for p in self.products if p[1] == selected_prod)
+                if selected_prod_instance not in prev_prods:
+                    self.menu_item.add_product(selected_prod_instance)
         else:
             menu_item = MenuItem(
                 self.app.hrms,

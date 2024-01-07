@@ -1,0 +1,6 @@
+mysqlclient==2.2.1
+python-dotenv==1.0.0
+reportlab==4.0.8
+SQLAlchemy==1.4.50
+tkcalendar==1.6.1
+tkTimePicker==2.0.2

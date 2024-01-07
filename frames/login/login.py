@@ -21,6 +21,7 @@ class LoginFrame(tk.Frame):
 
         self.login_button = tk.Button(self, text="LOGIN", command=self.login_validation, font=app.base_font, bg=app.button_color, fg="white", width=20, height=2)
         self.login_button.pack(pady=10)
+        
         self.app.bind('<Return>', lambda event=None: self.login_validation())
         self.phone_entry.focus_set()
 
@@ -32,9 +33,9 @@ class LoginFrame(tk.Frame):
 
         if not user or not user.check_password(password):
             return messagebox.showerror("Login Failed", "Incorrect phone number or password.")
+        
         self.app.unbind('<Return>')
         self.app.user = user
-
         if user.role == 'admin':
             return self.app.show_frame('MainFrame')
         if user.role == 'manager':

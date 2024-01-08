@@ -1,3 +1,4 @@
+# @d2-zhmurenko @n2-baktygaliye
 from orm.db import session
 from orm.entities.entities import User as UserEntity
 from utils.random_string import get_random_string

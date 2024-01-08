@@ -1,3 +1,4 @@
+# @d2-zhmurenko @n2-baktygaliye @y2-bugenov
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 from orm.db import session

@@ -1,3 +1,4 @@
+# @d2-zhmurenko
 from orm.db import session
 from orm.entities.entities import MenuCategory as MenuCategoryEntity
 

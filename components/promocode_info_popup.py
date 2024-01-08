@@ -1,3 +1,4 @@
+# @d2-zhmurenko
 import tkinter as tk
 
 class PromocodeInfoPopup(tk.Toplevel):

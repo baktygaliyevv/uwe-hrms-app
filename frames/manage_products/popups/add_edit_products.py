@@ -1,3 +1,4 @@
+# @y2-bugenov
 import tkinter as tk
 from tkinter import messagebox
 from orm.product import Product

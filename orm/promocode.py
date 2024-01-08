@@ -1,3 +1,4 @@
+# @n2-baktygaliye @d2-zhmurenko
 from datetime import date 
 from orm.db import session
 from orm.entities.entities import Promocode as PromocodeEntity

@@ -1,3 +1,4 @@
+# @d2-zhmurenko
 import tkinter as tk
 from frames.manage_deliveries.manage_deliveries import ManageDeliveriesFrame
 

@@ -1,3 +1,4 @@
+# @d2-zhmurenko @a2-kaluhin
 import tkinter as tk
 from tkinter import messagebox
 from components.table import TableComponent

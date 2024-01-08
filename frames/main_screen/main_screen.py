@@ -1,3 +1,4 @@
+# @a2-kaluhin @d2-zhmurenko
 import tkinter as tk
 
 DASHBOARDS = {

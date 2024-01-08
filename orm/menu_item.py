@@ -1,3 +1,4 @@
+# @d2-zhmurenko
 from sqlalchemy.sql import select
 from orm.db import session
 from orm.entities.entities import Menu as MenuEntity, t_menu_products

@@ -1,3 +1,4 @@
+# @n2-baktygaliye @d2-zhmurenko
 import tkinter as tk
 from orm.restaurant import Restaurant
 

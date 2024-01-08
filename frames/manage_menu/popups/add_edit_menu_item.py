@@ -1,3 +1,4 @@
+# @d2-zhmurenko
 import tkinter as tk
 from tkinter import ttk
 from frames.manage_menu.popups.add_menu_category import AddMenuCategoryPopup

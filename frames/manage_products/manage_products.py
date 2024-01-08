@@ -1,3 +1,4 @@
+# @y2-bugenov @a2-kaluhin @d2-zhmurenko
 import tkinter as tk
 from components.table import TableComponent
 from frames.manage_products.popups.add_edit_products import AddEditProductPopup

@@ -1,3 +1,4 @@
+# @d2-zhmurenko @n2-baktygaliye @a2-kaluhin
 import tkinter as tk
 from tkinter import ttk
 from orm.base import HRMS

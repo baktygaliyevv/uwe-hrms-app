@@ -1,4 +1,5 @@
 # coding: utf-8
+# autogen, can't be attibuted to anyone
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Table as STable, Text, text
 from sqlalchemy.dialects.mysql import ENUM, TEXT, TINYINT, VARCHAR
 from sqlalchemy.orm import relationship

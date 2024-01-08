@@ -1,3 +1,4 @@
+# @n2-baktygaliye
 import tkinter as tk
 from orm.table import Table
 from tkinter import messagebox

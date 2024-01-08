@@ -1,3 +1,4 @@
+# @d2-zhmurenko
 from datetime import datetime
 from sqlalchemy.sql import select
 from orm.db import session

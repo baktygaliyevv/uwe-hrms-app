@@ -1,3 +1,4 @@
+# @d2-zhmurenko
 import random
 import string
 

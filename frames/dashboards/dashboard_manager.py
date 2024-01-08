@@ -1,3 +1,4 @@
+# @d2-zhmurenko
 import tkinter as tk
 from frames.manage_bookings.manage_bookings import ManageBookingsFrame
 from components.restaurant_selector import RestaurantSelectorComponent

@@ -1,3 +1,4 @@
+# @d2-zhmurenko
 import hashlib
 
 def hash_password(password, salt):

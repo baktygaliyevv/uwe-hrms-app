@@ -1,3 +1,4 @@
+# @d2-zhmurenko
 import tkinter as tk
 from orm.menu_category import MenuCategory
 

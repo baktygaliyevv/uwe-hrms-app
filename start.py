@@ -1,3 +1,4 @@
+# @d2-zhmurenko @n2-baktygaliye @a2-kaluhin @y2-bugenov
 import sys
 from pathlib import Path
 sys.path.append(str(Path(__file__).resolve()))

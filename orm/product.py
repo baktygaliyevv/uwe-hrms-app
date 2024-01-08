@@ -1,3 +1,4 @@
+# @n2-baktygaliye @y2-bugenov @d2-zhmurenko
 from datetime import date
 from orm.db import session
 from orm.entities.entities import Product as ProductEntity

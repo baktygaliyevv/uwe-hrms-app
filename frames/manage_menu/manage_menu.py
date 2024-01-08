@@ -1,3 +1,4 @@
+# @d2-zhmurenko @a2-kaluhin
 import tkinter as tk
 from components.table import TableComponent
 from frames.manage_menu.popups.add_menu_category import AddMenuCategoryPopup

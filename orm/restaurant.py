@@ -1,3 +1,4 @@
+# @n2-baktygaliye @d2-zhmurenko
 from orm.db import session
 from orm.entities.entities import Restaurant as RestaurantEntity, RestaurantProduct as RestaurantProductEntity
 from orm.table import Table

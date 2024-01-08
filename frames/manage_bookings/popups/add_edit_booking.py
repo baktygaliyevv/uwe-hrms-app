@@ -1,3 +1,4 @@
+# @d2-zhmurenko
 import tkinter as tk
 from tkinter import ttk
 from datetime import date, time, datetime

@@ -41,6 +41,7 @@ class Restaurant(Base):
 
     restaurant_products = relationship("RestaurantProduct", back_populates="restaurant")
 
+
 class User(Base):
     __tablename__ = 'users'
 
@@ -131,7 +132,7 @@ class DeliveryMenu(Base):
     __tablename__ = 'delivery_menu'
 
     id = Column(Integer, primary_key=True)
-    delivery_id = Column(ForeignKey('deliveries.id'), nullable=False, index=True)
+    delivery_id = Column(ForeignKey('deliveries.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
     menu_id = Column(ForeignKey('menu.id'), nullable=False, index=True)
     quantity = Column(Integer, nullable=False)
 
@@ -165,7 +166,7 @@ class OrderMenu(Base):
     __tablename__ = 'order_menu'
 
     id = Column(Integer, primary_key=True)
-    order_id = Column(ForeignKey('orders.id'), nullable=False, index=True)
+    order_id = Column(ForeignKey('orders.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
     menu_id = Column(ForeignKey('menu.id'), nullable=False, index=True)
     quantity = Column(Integer, nullable=False)
 

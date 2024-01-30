@@ -32,9 +32,3 @@
    - For a list of available users and their credentials, refer to the [CREDENTIALS.md](CREDENTIALS.md) file.
 
 **Note:** The provided database will be kept working until the coursework is marked.
-
-## Contributors
-- [@d2-zhmurenko](https://gitlab.uwe.ac.uk/d2-zhmurenko)
-- [@n2-baktygaliye](https://gitlab.uwe.ac.uk/n2-baktygaliye)
-- [@a2-kaluhin](https://gitlab.uwe.ac.uk/a2-kaluhin)
-- [@y2-bugenov](https://gitlab.uwe.ac.uk/y2-bugenov)
